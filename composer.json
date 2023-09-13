@@ -14,7 +14,7 @@
         "php": ">=8.1",
         "symfony/dependency-injection": "^6.0",
         "symfony/filesystem": "^6.0",
-        "murtukov/php-code-generator": "^1.0"
+        "murtukov/php-code-generator": "^0.1"
     },
     "autoload": {
         "psr-4": {
