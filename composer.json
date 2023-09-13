@@ -1,5 +1,5 @@
 {
-    "name": "ATernovtsii/search-bundle",
+    "name": "aternovtsii/search-bundle",
     "type": "symfony-bundle",
     "description": "Symfony bundle for easy integration with elastic/opensearch search engine and doctrine",
     "keywords": [],
