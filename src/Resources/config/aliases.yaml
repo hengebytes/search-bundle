@@ -1,0 +1,5 @@
+services:
+    _defaults:
+        public: true
+
+    at_search.cache_compiler: '@ATernovtsii\SearchBundle\Elastic\Generator\IndexDocumentMetadataGenerator'

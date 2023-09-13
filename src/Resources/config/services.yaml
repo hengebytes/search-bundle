@@ -1,0 +1,8 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    ATernovtsii\SearchBundle\:
+        resource: '../../'
+        exclude: '../../{DependencyInjection,Resources,Query,Exception,Enum,Elastic/ValueObject}'
