@@ -67,10 +67,10 @@ class IndexDocumentBuilder
                     $fieldMap[] = $fieldMetadata->getFieldNamesForMap();
                 }
 
-                $customFieldGetter = $this->getCustomFieldsMap($attribute, $property);
-                if ($customFieldGetter) {
-                    $customFieldsGetter = $customFieldGetter;
-                }
+                //$customFieldGetter = $this->getCustomFieldsMap($attribute, $property);
+                //if ($customFieldGetter) {
+                //    $customFieldsGetter = $customFieldGetter;
+                //}
             }
         }
 
@@ -90,10 +90,10 @@ class IndexDocumentBuilder
                     }
                     $fieldMap[] = $fieldMetadata->getFieldNamesForMap();
                 }
-                $customFieldGetter = $this->getCustomFieldsMap($attribute, $method);
-                if ($customFieldGetter) {
-                    $customFieldsGetter = $customFieldGetter;
-                }
+                //$customFieldGetter = $this->getCustomFieldsMap($attribute, $method);
+                //if ($customFieldGetter) {
+                //    $customFieldsGetter = $customFieldGetter;
+                //}
             }
         }
 

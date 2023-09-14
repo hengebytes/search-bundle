@@ -33,7 +33,7 @@ readonly class FieldInConverterFilter implements FilterInputQueryToElasticConver
         if ($criterion instanceof RelationFieldFilter) {
             $ESFieldName = $this->fieldNameResolver->resolve(implode('.', $criterion->fields));
         } elseif ($criterion instanceof CustomFieldFilter) {
-            $ESFieldName = $this->fieldNameResolver->resolveCustom($criterion->field);
+            $ESFieldName = $criterion->field;
         } else {
             $ESFieldName = $this->fieldNameResolver->resolve($criterion->field);
         }

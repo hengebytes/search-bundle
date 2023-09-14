@@ -50,16 +50,4 @@ readonly class DocumentResolver
         return null;
     }
 
-    public function getCustomESFieldName(string $fieldName): ?string
-    {
-        foreach ($this->indexDocuments as $indexDocument) {
-            $resolvedName = $indexDocument->getCustomFields()[$fieldName] ?? null;
-            if ($resolvedName) {
-                return $resolvedName;
-            }
-        }
-
-        return null;
-    }
-
 }

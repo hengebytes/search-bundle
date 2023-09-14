@@ -12,9 +12,4 @@ readonly class FieldNameResolver
     {
         return $this->documentResolver->getESFieldName($fieldName);
     }
-
-    public function resolveCustom(string $fieldName): ?string
-    {
-        return $this->documentResolver->getCustomESFieldName($fieldName);
-    }
 }

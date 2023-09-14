@@ -27,7 +27,7 @@ readonly class FieldRangeBetweenConverterFilter implements FilterInputQueryToEla
             throw new InvalidArgumentException('Unsupported criteria');
         }
         if ($criterion instanceof CustomFieldFilter) {
-            $ESFieldName = $this->fieldNameResolver->resolveCustom($criterion->field);
+            $ESFieldName = $criterion->field;
         } else {
             $ESFieldName = $this->fieldNameResolver->resolve($criterion->field);
         }

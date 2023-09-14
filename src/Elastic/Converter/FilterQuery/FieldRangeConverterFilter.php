@@ -28,7 +28,7 @@ readonly class FieldRangeConverterFilter implements FilterInputQueryToElasticCon
         }
 
         if ($criterion instanceof CustomFieldFilter) {
-            $ESFieldName = $this->fieldNameResolver->resolveCustom($criterion->field);
+            $ESFieldName = $criterion->field;
         } else {
             $ESFieldName = $this->fieldNameResolver->resolve($criterion->field);
         }
