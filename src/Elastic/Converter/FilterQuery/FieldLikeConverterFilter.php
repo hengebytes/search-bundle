@@ -2,17 +2,17 @@
 
 namespace ATernovtsii\SearchBundle\Elastic\Converter\FilterQuery;
 
-use InvalidArgumentException;
-use ATernovtsii\SearchBundle\Elastic\Converter\FieldNameResolver;
-use ATernovtsii\SearchBundle\Elastic\Converter\FieldTypeResolver;
 use ATernovtsii\SearchBundle\Elastic\Converter\FilterInputQueryToElasticConverterInterface;
 use ATernovtsii\SearchBundle\Elastic\Converter\InputQueryToElasticFilter;
+use ATernovtsii\SearchBundle\Elastic\Resolver\FieldNameResolver;
+use ATernovtsii\SearchBundle\Elastic\Resolver\FieldTypeResolver;
 use ATernovtsii\SearchBundle\Elastic\ValueObject\QueryDSL\WildcardQuery;
 use ATernovtsii\SearchBundle\Query\Filter\CustomFieldFilter;
 use ATernovtsii\SearchBundle\Query\Filter\FieldFilter;
 use ATernovtsii\SearchBundle\Query\Filter\RelationFieldFilter;
 use ATernovtsii\SearchBundle\Query\FilterQueryCriterion;
 use ATernovtsii\SearchBundle\Query\Operator;
+use InvalidArgumentException;
 
 readonly class FieldLikeConverterFilter implements FilterInputQueryToElasticConverterInterface
 {

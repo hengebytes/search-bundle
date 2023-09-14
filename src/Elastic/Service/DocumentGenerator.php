@@ -2,12 +2,12 @@
 
 namespace ATernovtsii\SearchBundle\Elastic\Service;
 
+use ATernovtsii\SearchBundle\Elastic\Generator\IndexDocumentInterface;
+use ATernovtsii\SearchBundle\Elastic\ValueObject\Document;
+use ATernovtsii\SearchBundle\Event\IndexDocumentCreatedEvent;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\DependencyInjection\Attribute\TaggedIterator;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use ATernovtsii\SearchBundle\Elastic\Mapper\IndexDocumentInterface;
-use ATernovtsii\SearchBundle\Elastic\ValueObject\Document;
-use ATernovtsii\SearchBundle\Event\IndexCreateEvent;
 
 readonly class DocumentGenerator
 {
@@ -32,7 +32,7 @@ readonly class DocumentGenerator
         if (!$entity) {
             $document->tenantId = '*';
 
-            $this->eventDispatcher->dispatch(new IndexCreateEvent($document, $entity));
+            $this->eventDispatcher->dispatch(new IndexDocumentCreatedEvent($document, $entity));
 
             return $document;
         }
@@ -40,7 +40,7 @@ readonly class DocumentGenerator
         $document->tenantId = $this->getTenantId($entity);
         $document->body = $this->getBody($entity);
 
-        $this->eventDispatcher->dispatch(new IndexCreateEvent($document, $entity));
+        $this->eventDispatcher->dispatch(new IndexDocumentCreatedEvent($document, $entity));
 
         return $document;
     }

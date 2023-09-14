@@ -2,12 +2,6 @@
 
 namespace ATernovtsii\SearchBundle\Elastic\Generator;
 
-use Murtukov\PHPCodeGenerator\Modifier;
-use Murtukov\PHPCodeGenerator\PhpFile;
-use ReflectionAttribute;
-use ReflectionClass;
-use ReflectionMethod;
-use ReflectionProperty;
 use ATernovtsii\SearchBundle\Elastic\Annotation\ESBool;
 use ATernovtsii\SearchBundle\Elastic\Annotation\ESCustomFieldMap;
 use ATernovtsii\SearchBundle\Elastic\Annotation\ESDateTime;
@@ -19,9 +13,14 @@ use ATernovtsii\SearchBundle\Elastic\Annotation\ESMultiBool;
 use ATernovtsii\SearchBundle\Elastic\Annotation\ESMultiInt;
 use ATernovtsii\SearchBundle\Elastic\Annotation\ESMultiString;
 use ATernovtsii\SearchBundle\Elastic\Annotation\ESString;
-use ATernovtsii\SearchBundle\Elastic\FieldType;
-use ATernovtsii\SearchBundle\Elastic\Mapper\IndexDocumentInterface;
 use ATernovtsii\SearchBundle\Elastic\ValueObject\Document;
+use ATernovtsii\SearchBundle\Enum\FieldType;
+use Murtukov\PHPCodeGenerator\Modifier;
+use Murtukov\PHPCodeGenerator\PhpFile;
+use ReflectionAttribute;
+use ReflectionClass;
+use ReflectionMethod;
+use ReflectionProperty;
 
 class IndexDocumentBuilder
 {

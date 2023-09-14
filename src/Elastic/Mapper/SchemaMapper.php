@@ -2,7 +2,7 @@
 
 namespace ATernovtsii\SearchBundle\Elastic\Mapper;
 
-use ATernovtsii\SearchBundle\Elastic\FieldType;
+use ATernovtsii\SearchBundle\Enum\FieldType;
 
 abstract class SchemaMapper
 {
@@ -20,8 +20,8 @@ abstract class SchemaMapper
         FieldType::MULTI_BOOLEAN->value => 'boolean',
         FieldType::DATE->value => 'date',
         FieldType::FLOAT->value => 'float',
-        'double' => 'double',
-        'geo' => 'geo_point',
+        FieldType::DOUBLE->value => 'double',
+        FieldType::GEO_POINT->value => 'geo_point',
     ];
 
     private static array $fieldTypeSuffixes = [
@@ -38,8 +38,8 @@ abstract class SchemaMapper
         FieldType::MULTI_BOOLEAN->value => '_mb',
         FieldType::DATE->value => '_dt',
         FieldType::FLOAT->value => '_f',
-        'double' => '_d',
-        'geo' => '_gl',
+        FieldType::DOUBLE->value => '_d',
+        FieldType::GEO_POINT->value => '_gl',
     ];
 
     public static function getCustomFieldTypeByESFieldName(string $fieldName): ?string

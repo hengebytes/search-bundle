@@ -13,7 +13,7 @@ use Symfony\Component\Console\{Attribute\AsCommand,
 use ATernovtsii\SearchBundle\Elastic\Resolver\DocumentResolver;
 use ATernovtsii\SearchBundle\Elastic\Service\IndexManager;
 
-#[AsCommand(name: 'search:elastic:reindex')]
+#[AsCommand(name: 'at_search:elastic:reindex')]
 class ElasticReindexCommand extends Command
 {
     public function __construct(

@@ -3,8 +3,8 @@
 namespace ATernovtsii\SearchBundle\Elastic\Generator;
 
 use ATernovtsii\SearchBundle\Elastic\Converter\FilterInputQueryToElasticConverterInterface;
-use ATernovtsii\SearchBundle\Elastic\FieldType;
 use ATernovtsii\SearchBundle\Elastic\Mapper\SchemaMapper;
+use ATernovtsii\SearchBundle\Enum\FieldType;
 
 readonly class DocumentFieldMetadata
 {

@@ -2,7 +2,8 @@
 
 namespace ATernovtsii\SearchBundle\Elastic\Service;
 
-use ATernovtsii\SearchBundle\Elastic\Converter\{InputQueryToElasticFilter, InputQueryToElasticSort};
+use ATernovtsii\SearchBundle\Elastic\Converter\InputQueryToElasticFilter;
+use ATernovtsii\SearchBundle\Elastic\Converter\InputQueryToElasticSort;
 use ATernovtsii\SearchBundle\Elastic\Handler\SearchHandler;
 use ATernovtsii\SearchBundle\Elastic\ValueObject\Query;
 use ATernovtsii\SearchBundle\Exception\NoConverterException;

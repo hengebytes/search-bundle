@@ -2,13 +2,12 @@
 
 namespace ATernovtsii\SearchBundle\Elastic\Converter\SortQuery;
 
-use InvalidArgumentException;
-use RuntimeException;
-use ATernovtsii\SearchBundle\Elastic\Converter\{FieldNameResolver,
-    InputQueryToElasticSort,
-    SortInputQueryToElasticConverterInterface};
+use ATernovtsii\SearchBundle\Elastic\Converter\{InputQueryToElasticSort, SortInputQueryToElasticConverterInterface};
+use ATernovtsii\SearchBundle\Elastic\Resolver\FieldNameResolver;
 use ATernovtsii\SearchBundle\Query\SortClause\SortByField;
 use ATernovtsii\SearchBundle\Query\SortQueryCriterion;
+use InvalidArgumentException;
+use RuntimeException;
 
 readonly class FieldConverterFilter implements SortInputQueryToElasticConverterInterface
 {

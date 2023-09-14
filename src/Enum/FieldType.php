@@ -1,6 +1,6 @@
 <?php
 
-namespace ATernovtsii\SearchBundle\Elastic;
+namespace ATernovtsii\SearchBundle\Enum;
 
 enum FieldType: string
 {
@@ -17,4 +17,6 @@ enum FieldType: string
     case MULTI_BOOLEAN = 'mbool';
     case DATE = 'date';
     case FLOAT = 'float';
+    case DOUBLE = 'double';
+    case GEO_POINT = 'geo_point';
 }

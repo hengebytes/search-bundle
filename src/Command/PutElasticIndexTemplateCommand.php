@@ -13,10 +13,10 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 use ATernovtsii\SearchBundle\Elastic\Mapper\SchemaMapper;
 use ATernovtsii\SearchBundle\Elastic\ValueObject\Document;
 
-#[AsCommand(name: 'search:put_elastic:index_template')]
+#[AsCommand(name: 'at_search:put_elastic:index_template')]
 class PutElasticIndexTemplateCommand extends Command
 {
-    public function __construct(private readonly Client $elasticClient)
+    public function __construct(private readonly Client $client)
     {
         parent::__construct();
     }
@@ -30,7 +30,7 @@ class PutElasticIndexTemplateCommand extends Command
 
         try {
             $request = $this->buildRequest(false);
-            $this->elasticClient->indices()->putIndexTemplate($request);
+            $this->client->indices()->putIndexTemplate($request);
         } catch (Exception $e) {
             if (!str_contains($e->getMessage(), 'already exists') && !str_contains($e->getMessage(), 'default')) {
                 $io->error('Put elastic index template - error');
@@ -43,11 +43,11 @@ class PutElasticIndexTemplateCommand extends Command
         if ($alreadyExists && $io->confirm('Index template already exists, overwrite?', false)) {
             $io->warning('Index template already exists, overwriting');
             $request = $this->buildRequest(true);
-            $this->elasticClient->indices()->putIndexTemplate($request);
+            $this->client->indices()->putIndexTemplate($request);
             $io->success('Index template overwritten');
         }
 
-        $maxResultWindow = $this->elasticClient->indices()->getSettings([
+        $maxResultWindow = $this->client->indices()->getSettings([
             'index' => Document::$indexPrefix . '*',
         ]);
 
@@ -61,7 +61,7 @@ class PutElasticIndexTemplateCommand extends Command
 
         $new = (int)$io->ask('New max_result_window setting (default: 50000)', 50000);
         try {
-            $this->elasticClient->indices()->putSettings([
+            $this->client->indices()->putSettings([
                 'index' => Document::$indexPrefix . '*',
                 'body' => [
                     'max_result_window' => $new,

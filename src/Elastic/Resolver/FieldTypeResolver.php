@@ -1,6 +1,6 @@
 <?php
 
-namespace ATernovtsii\SearchBundle\Elastic\Converter;
+namespace ATernovtsii\SearchBundle\Elastic\Resolver;
 
 use ATernovtsii\SearchBundle\Elastic\Mapper\SchemaMapper;
 
