@@ -7,7 +7,7 @@ use Symfony\Component\DependencyInjection\Attribute\AutoconfigureTag;
 use ATernovtsii\SearchBundle\Doctrine\JoinAwareQueryBuilder;
 use ATernovtsii\SearchBundle\Query\FilterQueryCriterion;
 
-#[AutoconfigureTag('app.doctrine.query.filter')]
+#[AutoconfigureTag('at_search.doctrine.query.filter')]
 interface InputQueryToDoctrineConverterInterface
 {
     public function convert(
