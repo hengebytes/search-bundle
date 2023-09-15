@@ -185,7 +185,7 @@ class IndexDocumentBuilder
                 && $property->getType()->getName() === 'DateTimeInterface'
             )
         ) {
-            $nameOrFunc .= '->format(\'c\')';
+            $nameOrFunc .= '?->format(\'c\')';
         }
         $getter = '$entity->' . $nameOrFunc;
         $subFieldFunc = '';
