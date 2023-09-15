@@ -165,7 +165,7 @@ class IndexDocumentBuilder
             $type === 'ignored' ? null : $type,
             $this->getEntityPropertyValue($attribute, $property),
             $property->getName(),
-            $attribute->getArguments()['subField'] ?? null
+            $attribute->getArguments()['subFields'] ?? null
         );
     }
 
@@ -195,7 +195,7 @@ class IndexDocumentBuilder
         }
         $getter = '$entity->' . $nameOrFunc;
         $subFieldFunc = '';
-        $subField = $attribute->getArguments()['subField'] ?? null;
+        $subField = $attribute->getArguments()['subFields'] ?? null;
         if ($subField) {
             if (str_contains($subField, '.')) {
                 $subFields = explode('.', $subField);
