@@ -66,11 +66,6 @@ class IndexDocumentBuilder
                     }
                     $fieldMap[] = $fieldMetadata->getFieldNamesForMap();
                 }
-
-                //$customFieldGetter = $this->getCustomFieldsMap($attribute, $property);
-                //if ($customFieldGetter) {
-                //    $customFieldsGetter = $customFieldGetter;
-                //}
             }
         }
 
@@ -90,10 +85,6 @@ class IndexDocumentBuilder
                     }
                     $fieldMap[] = $fieldMetadata->getFieldNamesForMap();
                 }
-                //$customFieldGetter = $this->getCustomFieldsMap($attribute, $method);
-                //if ($customFieldGetter) {
-                //    $customFieldsGetter = $customFieldGetter;
-                //}
             }
         }
 
@@ -174,6 +165,7 @@ class IndexDocumentBuilder
             $type === 'ignored' ? null : $type,
             $this->getEntityPropertyValue($attribute, $property),
             $property->getName(),
+            $attribute->getArguments()['subField'] ?? null
         );
     }
 
@@ -222,15 +214,5 @@ class IndexDocumentBuilder
         }
 
         return $getter;
-    }
-
-    private function getCustomFieldsMap(ReflectionAttribute $attribute, ReflectionProperty|ReflectionMethod $property): ?string
-    {
-        $name = $attribute->getName();
-        if ($name !== ESCustomFieldMap::class) {
-            return null;
-        }
-
-        return $this->getEntityPropertyValue($attribute, $property);
     }
 }

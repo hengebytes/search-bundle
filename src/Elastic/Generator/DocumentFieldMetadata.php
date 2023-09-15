@@ -13,16 +13,21 @@ readonly class DocumentFieldMetadata
         public ?FieldType $type,
         public string $valueResolver,
         public string $originalFieldName,
+        private ?string $subField
     ) {
     }
 
     public function getFieldNamesForMap(): array
     {
+        $fieldName = $this->fieldName;
+        if ($this->subField) {
+            $fieldName .= '.' . $this->subField;
+        }
         if (!$this->type) {
-            return [$this->originalFieldName => FilterInputQueryToElasticConverterInterface::IGNORED_FIELD];
+            return [$fieldName => FilterInputQueryToElasticConverterInterface::IGNORED_FIELD];
         }
 
-        return [$this->originalFieldName => $this->fieldName . SchemaMapper::getSuffixByCustomType($this->type->value)];
+        return [$fieldName => $this->fieldName . SchemaMapper::getSuffixByCustomType($this->type->value)];
     }
 
     public function getFieldNameWithResolver(): ?string
