@@ -155,7 +155,7 @@ class IndexDocumentBuilder
         }
 
         return new DocumentFieldMetadata(
-            $this->toSnakeCase($property->getName()),
+            $attribute->getArguments()['name'] ?? $this->toSnakeCase($property->getName()),
             $type === 'ignored' ? null : $type,
             $this->getEntityPropertyValue($attribute, $property),
             $property->getName(),

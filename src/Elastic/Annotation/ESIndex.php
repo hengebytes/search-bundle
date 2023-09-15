@@ -5,9 +5,6 @@ namespace ATernovtsii\SearchBundle\Elastic\Annotation;
 use Attribute;
 
 #[Attribute(Attribute::TARGET_CLASS)]
-final readonly class ESIndex
+final readonly class ESIndex extends ESField
 {
-    public function __construct(public ?string $name = null)
-    {
-    }
 }
