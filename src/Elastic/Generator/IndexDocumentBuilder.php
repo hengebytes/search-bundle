@@ -194,10 +194,10 @@ class IndexDocumentBuilder
             if (str_contains($subField, '.')) {
                 $subFields = explode('.', $subField);
                 foreach ($subFields as $subField) {
-                    $subFieldFunc .= '->' . $subField;
+                    $subFieldFunc .= '?->' . $subField;
                 }
             } else {
-                $subFieldFunc .= '->' . $subField;
+                $subFieldFunc .= '?->' . $subField;
             }
         }
 
