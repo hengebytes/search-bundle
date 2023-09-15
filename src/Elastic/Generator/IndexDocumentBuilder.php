@@ -201,11 +201,17 @@ class IndexDocumentBuilder
             }
         }
 
-        if (in_array($attribute->getName(), [ESMultiString::class, ESMultiString::class], true)) {
-            $getter .= ' instanceof ReadableCollection ? $entity->' . $nameOrFunc . '->toArray() : $entity->' . $nameOrFunc;
-            $getter = 'array_map(static fn($item) => $item' . $subFieldFunc . ', ' . $getter . ')';
+        $converter = match ($attribute->getName()) {
+            ESInt::class, ESMultiInt::class => '(int) ',
+            ESBool::class, ESMultiBool::class => '(bool) ',
+            default => '',
+        };
+
+        if (in_array($attribute->getName(), [ESMultiString::class, ESMultiInt::class], true)) {
+            $getter .= ' instanceof ReadableCollection ? ' . $getter . '->toArray() : ' . $getter;
+            $getter = 'array_map(static fn($item) => $item' . $converter . $subFieldFunc . ', ' . $getter . ')';
         } else {
-            $getter .= $subFieldFunc;
+            $getter = $converter . $getter . $subFieldFunc;
         }
 
         return $getter;
