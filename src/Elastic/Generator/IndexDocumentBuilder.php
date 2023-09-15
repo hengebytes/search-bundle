@@ -209,7 +209,7 @@ class IndexDocumentBuilder
 
         if (in_array($attribute->getName(), [ESMultiString::class, ESMultiInt::class], true)) {
             $getter .= ' instanceof ReadableCollection ? ' . $getter . '->toArray() : ' . $getter;
-            $getter = 'array_map(static fn($item) => $item' . $converter . $subFieldFunc . ', ' . $getter . ')';
+            $getter = 'array_map(static fn($item) =>' . $converter . '$item' . $subFieldFunc . ', ' . $getter . ')';
         } else {
             $getter = $converter . $getter . $subFieldFunc;
         }
