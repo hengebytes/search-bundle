@@ -81,7 +81,7 @@ class User
     #[ORM\Column(length: 128)]
     public ?string $firstName = null;
 
-    #[ATSearch\ESMultiString(subField: 'email')]
+    #[ATSearch\ESMultiString(subFields: 'email')]
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Email::class)]
     public Collection $emails;
 ```
