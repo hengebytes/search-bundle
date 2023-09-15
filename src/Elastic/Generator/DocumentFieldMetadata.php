@@ -9,19 +9,19 @@ use ATernovtsii\SearchBundle\Enum\FieldType;
 readonly class DocumentFieldMetadata
 {
     public function __construct(
-        public string $fieldName,
-        public ?FieldType $type,
-        public string $valueResolver,
-        public string $originalFieldName,
-        private ?string $subField
+        private string $fieldName,
+        private ?FieldType $type,
+        private string $valueResolver,
+        private string $originalFieldName,
+        private ?string $subFields
     ) {
     }
 
     public function getFieldNamesForMap(): array
     {
-        $fieldName = $this->fieldName;
-        if ($this->subField) {
-            $fieldName .= '.' . $this->subField;
+        $fieldName = $this->originalFieldName;
+        if ($this->subFields) {
+            $fieldName .= '.' . $this->subFields;
         }
         if (!$this->type) {
             return [$fieldName => FilterInputQueryToElasticConverterInterface::IGNORED_FIELD];
