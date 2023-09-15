@@ -40,4 +40,9 @@ readonly class DocumentFieldMetadata
             . SchemaMapper::getSuffixByCustomType($this->type->value)
             . '\' => ' . $this->valueResolver;
     }
+
+    public function isMulti(): bool
+    {
+        return in_array($this->type, [FieldType::MULTI_STRING, FieldType::MULTI_INTEGER, FieldType::MULTI_BOOLEAN], true);
+    }
 }

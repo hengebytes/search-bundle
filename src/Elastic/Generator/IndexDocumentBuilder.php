@@ -45,7 +45,7 @@ class IndexDocumentBuilder
         }
         $fields = [];
         $fieldMap = [[]];
-        $customFieldsGetter = null;
+        $hasMultiField = true;
         $documentClassName = $className . 'IndexDocument';
 
         $tenantIdFunc = Document::DEFAULT_TENANT_ID;
@@ -58,13 +58,15 @@ class IndexDocumentBuilder
                     $tenantIdFunc = $resolvedTenantIdFunc;
                 }
                 $fieldMetadata = $this->getFieldMetadata($attribute, $property);
-                if ($fieldMetadata) {
-                    $field = $fieldMetadata->getFieldNameWithResolver();
-                    if ($field) {
-                        $fields[] = $field;
-                    }
-                    $fieldMap[] = $fieldMetadata->getFieldNamesForMap();
+                if (!$fieldMetadata) {
+                    continue;
                 }
+                $field = $fieldMetadata->getFieldNameWithResolver();
+                if ($field) {
+                    $fields[] = $field;
+                }
+                $fieldMap[] = $fieldMetadata->getFieldNamesForMap();
+                $hasMultiField = $hasMultiField || $fieldMetadata->isMulti();
             }
         }
 
@@ -77,21 +79,26 @@ class IndexDocumentBuilder
                     $tenantIdFunc = $resolvedTenantIdFunc;
                 }
                 $fieldMetadata = $this->getFieldMetadata($attribute, $method);
-                if ($fieldMetadata) {
-                    $field = $fieldMetadata->getFieldNameWithResolver();
-                    if ($field) {
-                        $fields[] = $field;
-                    }
-                    $fieldMap[] = $fieldMetadata->getFieldNamesForMap();
+                if (!$fieldMetadata) {
+                    continue;
                 }
+                $field = $fieldMetadata->getFieldNameWithResolver();
+                if ($field) {
+                    $fields[] = $field;
+                }
+                $fieldMap[] = $fieldMetadata->getFieldNamesForMap();
+                $hasMultiField = $hasMultiField || $fieldMetadata->isMulti();
             }
         }
 
         $fileBuilder = PhpFile::new()->setNamespace('ATernovtsii\\SearchBundle\\DocumentMetadata');
         $class = $fileBuilder->createClass($documentClassName)->setFinal()
             ->addImplements(IndexDocumentInterface::class)
-            ->addUse($namespace . '\\' . $className)
-            ->addUse('Doctrine\Common\Collections\ReadableCollection')
+            ->addUse($namespace . '\\' . $className);
+        if ($hasMultiField) {
+            $class = $class->addUse('Doctrine\Common\Collections\ReadableCollection');
+        }
+        $class = $class
             ->setDocBlock(static::DOCBLOCK_TEXT)
             ->addProperty('fieldsMap', Modifier::PRIVATE, 'array', array_merge(...$fieldMap));
 
