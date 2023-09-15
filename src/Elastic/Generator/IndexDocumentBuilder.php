@@ -3,7 +3,6 @@
 namespace ATernovtsii\SearchBundle\Elastic\Generator;
 
 use ATernovtsii\SearchBundle\Elastic\Annotation\ESBool;
-use ATernovtsii\SearchBundle\Elastic\Annotation\ESCustomFieldMap;
 use ATernovtsii\SearchBundle\Elastic\Annotation\ESDateTime;
 use ATernovtsii\SearchBundle\Elastic\Annotation\ESId;
 use ATernovtsii\SearchBundle\Elastic\Annotation\ESIgnored;
@@ -92,6 +91,7 @@ class IndexDocumentBuilder
         $class = $fileBuilder->createClass($documentClassName)->setFinal()
             ->addImplements(IndexDocumentInterface::class)
             ->addUse($namespace . '\\' . $className)
+            ->addUse('Doctrine\Common\Collections\ReadableCollection')
             ->setDocBlock(static::DOCBLOCK_TEXT)
             ->addProperty('fieldsMap', Modifier::PRIVATE, 'array', array_merge(...$fieldMap));
 
@@ -122,12 +122,6 @@ class IndexDocumentBuilder
             ->setDocBlock('{@inheritdoc}')
             ->addArgument('fieldName', 'string')
             ->append('return $this->fieldsMap[$fieldName] ?? null');
-
-        $class->createMethod('getCustomFields')
-            ->setReturnType('array')
-            ->setDocBlock('{@inheritdoc}')
-            ->addArgument('entity', 'object')
-            ->append("return " . ($customFieldsGetter ?: '[]'));
 
         return $fileBuilder;
     }
@@ -208,6 +202,7 @@ class IndexDocumentBuilder
         }
 
         if (in_array($attribute->getName(), [ESMultiString::class, ESMultiString::class], true)) {
+            $getter .= ' instanceof ReadableCollection ? $entity->' . $nameOrFunc . '->toArray() : $entity->' . $nameOrFunc;
             $getter = 'array_map(static fn($item) => $item' . $subFieldFunc . ', ' . $getter . ')';
         } else {
             $getter .= $subFieldFunc;

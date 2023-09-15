@@ -43,7 +43,7 @@ class ElasticReindexCommand extends Command
             )
             ->addOption(
                 'type',
-                't',
+                'c',
                 InputArgument::OPTIONAL,
                 'Type of content for reindex.',
                 null
@@ -57,6 +57,12 @@ class ElasticReindexCommand extends Command
         $purge = !$input->getOption('no-purge');
         $tenantId = $input->getOption('tenant');
         $contentType = $input->getOption('type');
+        if (!$contentType) {
+            $output->writeln('Valid content type is required');
+
+            return Command::FAILURE;
+        }
+
         $entityClass = $this->documentResolver->getEntityClassNameByIndex($contentType);
         if ($contentType !== 'all' && !$entityClass) {
             $output->writeln('Valid content type is required');
