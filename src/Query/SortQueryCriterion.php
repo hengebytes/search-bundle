@@ -1,6 +1,6 @@
 <?php
 
-namespace ATernovtsii\SearchBundle\Query;
+namespace ATSearchBundle\Query;
 
 interface SortQueryCriterion
 {

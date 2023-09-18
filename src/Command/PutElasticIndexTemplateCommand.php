@@ -1,7 +1,7 @@
 <?php
 
 
-namespace ATernovtsii\SearchBundle\Command;
+namespace ATSearchBundle\Command;
 
 use Exception;
 use OpenSearch\Client;
@@ -10,8 +10,8 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use ATernovtsii\SearchBundle\Elastic\Mapper\SchemaMapper;
-use ATernovtsii\SearchBundle\Elastic\ValueObject\Document;
+use ATSearchBundle\Elastic\Mapper\SchemaMapper;
+use ATSearchBundle\Elastic\ValueObject\Document;
 
 #[AsCommand(name: 'at_search:put_elastic:index_template')]
 class PutElasticIndexTemplateCommand extends Command

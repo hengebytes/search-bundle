@@ -1,6 +1,6 @@
 <?php
 
-namespace ATernovtsii\SearchBundle\Elastic\Resolver;
+namespace ATSearchBundle\Elastic\Resolver;
 
 readonly class FieldNameResolver
 {

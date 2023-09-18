@@ -1,19 +1,19 @@
 <?php
 
-namespace ATernovtsii\SearchBundle\Elastic\Generator;
+namespace ATSearchBundle\Elastic\Generator;
 
-use ATernovtsii\SearchBundle\Elastic\Annotation\ESBool;
-use ATernovtsii\SearchBundle\Elastic\Annotation\ESDateTime;
-use ATernovtsii\SearchBundle\Elastic\Annotation\ESId;
-use ATernovtsii\SearchBundle\Elastic\Annotation\ESIgnored;
-use ATernovtsii\SearchBundle\Elastic\Annotation\ESIndex;
-use ATernovtsii\SearchBundle\Elastic\Annotation\ESInt;
-use ATernovtsii\SearchBundle\Elastic\Annotation\ESMultiBool;
-use ATernovtsii\SearchBundle\Elastic\Annotation\ESMultiInt;
-use ATernovtsii\SearchBundle\Elastic\Annotation\ESMultiString;
-use ATernovtsii\SearchBundle\Elastic\Annotation\ESString;
-use ATernovtsii\SearchBundle\Elastic\ValueObject\Document;
-use ATernovtsii\SearchBundle\Enum\FieldType;
+use ATSearchBundle\Elastic\Annotation\ESBool;
+use ATSearchBundle\Elastic\Annotation\ESDateTime;
+use ATSearchBundle\Elastic\Annotation\ESId;
+use ATSearchBundle\Elastic\Annotation\ESIgnored;
+use ATSearchBundle\Elastic\Annotation\ESIndex;
+use ATSearchBundle\Elastic\Annotation\ESInt;
+use ATSearchBundle\Elastic\Annotation\ESMultiBool;
+use ATSearchBundle\Elastic\Annotation\ESMultiInt;
+use ATSearchBundle\Elastic\Annotation\ESMultiString;
+use ATSearchBundle\Elastic\Annotation\ESString;
+use ATSearchBundle\Elastic\ValueObject\Document;
+use ATSearchBundle\Enum\FieldType;
 use Murtukov\PHPCodeGenerator\Modifier;
 use Murtukov\PHPCodeGenerator\PhpFile;
 use ReflectionAttribute;
@@ -91,7 +91,7 @@ class IndexDocumentBuilder
             }
         }
 
-        $fileBuilder = PhpFile::new()->setNamespace('ATernovtsii\\SearchBundle\\DocumentMetadata');
+        $fileBuilder = PhpFile::new()->setNamespace('ATSearchBundle\\DocumentMetadata');
         $class = $fileBuilder->createClass($documentClassName)->setFinal()
             ->addImplements(IndexDocumentInterface::class)
             ->addUse($namespace . '\\' . $className);
@@ -135,7 +135,7 @@ class IndexDocumentBuilder
 
     private function getTenantIdFunc(ReflectionAttribute $attribute, ReflectionProperty|ReflectionMethod $property): ?string
     {
-        if ($attribute->getName() !== 'ATernovtsii\SearchBundle\Elastic\Annotation\ESTenantId') {
+        if ($attribute->getName() !== 'ATSearchBundle\Elastic\Annotation\ESTenantId') {
             return null;
         }
 

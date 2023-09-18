@@ -1,14 +1,14 @@
 <?php
 
-namespace ATernovtsii\SearchBundle\DependencyInjection;
+namespace ATSearchBundle\DependencyInjection;
 
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
-use ATernovtsii\SearchBundle\Elastic\Generator\IndexDocumentBuilder;
-use ATernovtsii\SearchBundle\Elastic\Generator\IndexDocumentMetadataGenerator;
+use ATSearchBundle\Elastic\Generator\IndexDocumentBuilder;
+use ATSearchBundle\Elastic\Generator\IndexDocumentMetadataGenerator;
 
 class ATSearchExtension extends Extension
 {

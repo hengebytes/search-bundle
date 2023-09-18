@@ -9,7 +9,7 @@ composer require aternovtsii/search-bundle
 
 return [
     // ...
-    ATernovtsii\SearchBundle\ATSearchBundle::class => ['all' => true],
+    ATSearchBundle\ATSearchBundle::class => ['all' => true],
 ];
 ```
 #### To enable additional doctrine filters add the following to your config/doctrine.yaml file
@@ -18,9 +18,9 @@ doctrine:
     orm:
         dql:
             numeric_functions:
-                IFNULL: ATernovtsii\SearchBundle\Doctrine\Extensions\Query\IfNull
-                JSON_CONTAINS: ATernovtsii\SearchBundle\Doctrine\Extensions\Query\JsonContains
-                RAND: ATernovtsii\SearchBundle\Doctrine\Extensions\Query\Rand
+                IFNULL: ATSearchBundle\Doctrine\Extensions\Query\IfNull
+                JSON_CONTAINS: ATSearchBundle\Doctrine\Extensions\Query\JsonContains
+                RAND: ATSearchBundle\Doctrine\Extensions\Query\Rand
 
 ```
 #### Configure bundle in your config/packages/at_search.yaml file
@@ -65,7 +65,7 @@ at_search:
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use ATernovtsii\SearchBundle\Elastic\Annotation as ATSearch;
+use ATSearchBundle\Elastic\Annotation as ATSearch;
 
 #[ATSearch\Index]
 #[ORM\Entity]

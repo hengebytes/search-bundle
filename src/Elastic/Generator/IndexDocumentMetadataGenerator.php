@@ -1,6 +1,6 @@
 <?php
 
-namespace ATernovtsii\SearchBundle\Elastic\Generator;
+namespace ATSearchBundle\Elastic\Generator;
 
 use Composer\Autoload\ClassLoader;
 use Symfony\Component\Filesystem\Filesystem;
@@ -73,7 +73,7 @@ class IndexDocumentMetadataGenerator
 
     private function getCacheDir(): ?string
     {
-        return $this->cacheBaseDir . '/ATernovtsii/search-bundle';
+        return $this->cacheBaseDir . '/at-search-bundle';
     }
 
     private function getClassesMap(): string
@@ -104,7 +104,7 @@ class IndexDocumentMetadataGenerator
             }
 
             $path = "$outputDirectory/$documentClassName.php";
-            $classes["ATernovtsii\\SearchBundle\\DocumentMetadata\\$documentClassName"] = $path;
+            $classes["ATSearchBundle\\DocumentMetadata\\$documentClassName"] = $path;
 
         }
 

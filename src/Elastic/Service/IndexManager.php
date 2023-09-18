@@ -1,9 +1,9 @@
 <?php
 
-namespace ATernovtsii\SearchBundle\Elastic\Service;
+namespace ATSearchBundle\Elastic\Service;
 
 use OpenSearch\Client;
-use ATernovtsii\SearchBundle\Elastic\ValueObject\Document;
+use ATSearchBundle\Elastic\ValueObject\Document;
 
 readonly class IndexManager
 {

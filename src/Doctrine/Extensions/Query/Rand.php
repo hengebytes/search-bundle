@@ -1,6 +1,6 @@
 <?php
 
-namespace ATernovtsii\SearchBundle\Doctrine\Extensions\Query;
+namespace ATSearchBundle\Doctrine\Extensions\Query;
 
 use Doctrine\ORM\Query\Lexer;
 use Doctrine\ORM\Query\Parser;

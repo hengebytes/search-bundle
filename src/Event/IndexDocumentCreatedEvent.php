@@ -1,9 +1,9 @@
 <?php
 
-namespace ATernovtsii\SearchBundle\Event;
+namespace ATSearchBundle\Event;
 
 use Symfony\Contracts\EventDispatcher\Event;
-use ATernovtsii\SearchBundle\Elastic\ValueObject\Document;
+use ATSearchBundle\Elastic\ValueObject\Document;
 
 class IndexDocumentCreatedEvent extends Event
 {

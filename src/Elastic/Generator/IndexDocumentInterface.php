@@ -1,6 +1,6 @@
 <?php
 
-namespace ATernovtsii\SearchBundle\Elastic\Generator;
+namespace ATSearchBundle\Elastic\Generator;
 
 interface IndexDocumentInterface
 {

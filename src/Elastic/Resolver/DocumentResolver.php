@@ -1,8 +1,8 @@
 <?php
 
-namespace ATernovtsii\SearchBundle\Elastic\Resolver;
+namespace ATSearchBundle\Elastic\Resolver;
 
-use ATernovtsii\SearchBundle\Elastic\Generator\IndexDocumentInterface;
+use ATSearchBundle\Elastic\Generator\IndexDocumentInterface;
 use Symfony\Component\DependencyInjection\Attribute\TaggedIterator;
 
 readonly class DocumentResolver

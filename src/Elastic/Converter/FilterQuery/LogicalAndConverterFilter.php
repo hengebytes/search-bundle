@@ -1,11 +1,11 @@
 <?php
 
-namespace ATernovtsii\SearchBundle\Elastic\Converter\FilterQuery;
+namespace ATSearchBundle\Elastic\Converter\FilterQuery;
 
-use ATernovtsii\SearchBundle\Elastic\Converter\{FilterInputQueryToElasticConverterInterface, InputQueryToElasticFilter};
-use ATernovtsii\SearchBundle\Elastic\ValueObject\QueryDSL\{BoolQuery, RawQuery};
-use ATernovtsii\SearchBundle\Query\Filter\LogicalAnd;
-use ATernovtsii\SearchBundle\Query\FilterQueryCriterion;
+use ATSearchBundle\Elastic\Converter\{FilterInputQueryToElasticConverterInterface, InputQueryToElasticFilter};
+use ATSearchBundle\Elastic\ValueObject\QueryDSL\{BoolQuery, RawQuery};
+use ATSearchBundle\Query\Filter\LogicalAnd;
+use ATSearchBundle\Query\FilterQueryCriterion;
 
 readonly class LogicalAndConverterFilter implements FilterInputQueryToElasticConverterInterface
 {

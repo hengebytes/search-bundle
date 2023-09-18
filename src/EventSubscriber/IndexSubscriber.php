@@ -1,9 +1,9 @@
 <?php
 
-namespace ATernovtsii\SearchBundle\EventSubscriber;
+namespace ATSearchBundle\EventSubscriber;
 
-use ATernovtsii\SearchBundle\Elastic\Generator\IndexExtractor;
-use ATernovtsii\SearchBundle\Event\IndexDocumentCreatedEvent;
+use ATSearchBundle\Elastic\Generator\IndexExtractor;
+use ATSearchBundle\Event\IndexDocumentCreatedEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 readonly class IndexSubscriber implements EventSubscriberInterface

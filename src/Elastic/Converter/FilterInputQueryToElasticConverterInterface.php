@@ -1,9 +1,9 @@
 <?php
 
-namespace ATernovtsii\SearchBundle\Elastic\Converter;
+namespace ATSearchBundle\Elastic\Converter;
 
 use Symfony\Component\DependencyInjection\Attribute\AutoconfigureTag;
-use ATernovtsii\SearchBundle\Query\FilterQueryCriterion;
+use ATSearchBundle\Query\FilterQueryCriterion;
 
 #[AutoconfigureTag('at_search.elastic.query.filter_converter')]
 interface FilterInputQueryToElasticConverterInterface

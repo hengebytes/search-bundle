@@ -1,14 +1,14 @@
 <?php
 
-namespace ATernovtsii\SearchBundle\Doctrine\Converter\FilterQuery;
+namespace ATSearchBundle\Doctrine\Converter\FilterQuery;
 
 use Doctrine\DBAL\Query\Expression\CompositeExpression;
 use InvalidArgumentException;
-use ATernovtsii\SearchBundle\Doctrine\Converter\{InputQueryToDoctrineConverterInterface,
+use ATSearchBundle\Doctrine\Converter\{InputQueryToDoctrineConverterInterface,
     InputQueryToDoctrineQueryFilters};
-use ATernovtsii\SearchBundle\Doctrine\JoinAwareQueryBuilder;
-use ATernovtsii\SearchBundle\Query\Filter\FieldFilter;
-use ATernovtsii\SearchBundle\Query\FilterQueryCriterion;
+use ATSearchBundle\Doctrine\JoinAwareQueryBuilder;
+use ATSearchBundle\Query\Filter\FieldFilter;
+use ATSearchBundle\Query\FilterQueryCriterion;
 
 class FieldConverter extends BaseFieldConverter implements InputQueryToDoctrineConverterInterface
 {

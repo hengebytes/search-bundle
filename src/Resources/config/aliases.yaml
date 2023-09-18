@@ -2,4 +2,4 @@ services:
     _defaults:
         public: true
 
-    at_search.cache_compiler: '@ATernovtsii\SearchBundle\Elastic\Generator\IndexDocumentMetadataGenerator'
+    at_search.cache_compiler: '@ATSearchBundle\Elastic\Generator\IndexDocumentMetadataGenerator'

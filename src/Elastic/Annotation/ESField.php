@@ -1,6 +1,6 @@
 <?php
 
-namespace ATernovtsii\SearchBundle\Elastic\Annotation;
+namespace ATSearchBundle\Elastic\Annotation;
 
 use Attribute;
 

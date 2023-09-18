@@ -1,12 +1,12 @@
 <?php
 
-namespace ATernovtsii\SearchBundle\Service;
+namespace ATSearchBundle\Service;
 
-use ATernovtsii\SearchBundle\Doctrine\Service\SearchService as DoctrineSearchServiceAlias;
-use ATernovtsii\SearchBundle\Elastic\Service\SearchService as ElasticSearchServiceAlias;
-use ATernovtsii\SearchBundle\Enum\SearchSourceEnum;
-use ATernovtsii\SearchBundle\Query\SearchQuery;
-use ATernovtsii\SearchBundle\ValueObject\Result;
+use ATSearchBundle\Doctrine\Service\SearchService as DoctrineSearchServiceAlias;
+use ATSearchBundle\Elastic\Service\SearchService as ElasticSearchServiceAlias;
+use ATSearchBundle\Enum\SearchSourceEnum;
+use ATSearchBundle\Query\SearchQuery;
+use ATSearchBundle\ValueObject\Result;
 use Symfony\Component\DependencyInjection\Attribute\AsAlias;
 
 #[AsAlias(SearchServiceInterface::class)]

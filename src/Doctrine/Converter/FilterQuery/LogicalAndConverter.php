@@ -1,13 +1,13 @@
 <?php
 
-namespace ATernovtsii\SearchBundle\Doctrine\Converter\FilterQuery;
+namespace ATSearchBundle\Doctrine\Converter\FilterQuery;
 
 use Doctrine\DBAL\Query\Expression\CompositeExpression;
-use ATernovtsii\SearchBundle\Doctrine\Converter\InputQueryToDoctrineConverterInterface;
-use ATernovtsii\SearchBundle\Doctrine\Converter\InputQueryToDoctrineQueryFilters;
-use ATernovtsii\SearchBundle\Doctrine\JoinAwareQueryBuilder;
-use ATernovtsii\SearchBundle\Query\Filter\LogicalAnd;
-use ATernovtsii\SearchBundle\Query\FilterQueryCriterion;
+use ATSearchBundle\Doctrine\Converter\InputQueryToDoctrineConverterInterface;
+use ATSearchBundle\Doctrine\Converter\InputQueryToDoctrineQueryFilters;
+use ATSearchBundle\Doctrine\JoinAwareQueryBuilder;
+use ATSearchBundle\Query\Filter\LogicalAnd;
+use ATSearchBundle\Query\FilterQueryCriterion;
 
 readonly class LogicalAndConverter implements InputQueryToDoctrineConverterInterface
 {

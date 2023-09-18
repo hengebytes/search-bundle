@@ -3,6 +3,6 @@ services:
         autowire: true
         autoconfigure: true
 
-    ATernovtsii\SearchBundle\:
+    ATSearchBundle\:
         resource: '../../'
         exclude: '../../{DependencyInjection,Resources,Query,Exception,Enum,Elastic/ValueObject}'

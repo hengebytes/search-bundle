@@ -1,6 +1,6 @@
 <?php
 
-namespace ATernovtsii\SearchBundle\Doctrine;
+namespace ATSearchBundle\Doctrine;
 
 use Doctrine\ORM\QueryBuilder;
 

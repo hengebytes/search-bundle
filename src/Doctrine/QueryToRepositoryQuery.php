@@ -1,15 +1,15 @@
 <?php
 
-namespace ATernovtsii\SearchBundle\Doctrine;
+namespace ATSearchBundle\Doctrine;
 
 use Doctrine\ORM\Query;
 use Doctrine\ORM\Query\Expr\Join;
 use Doctrine\ORM\QueryBuilder;
 use Symfony\Contracts\Translation\LocaleAwareInterface;
-use ATernovtsii\SearchBundle\Doctrine\Converter\InputQueryToDoctrineQueryFilters;
-use ATernovtsii\SearchBundle\Query\SearchQuery;
-use ATernovtsii\SearchBundle\Query\SortClause\SortByField;
-use ATernovtsii\SearchBundle\Query\SortClause\SortByRelationField;
+use ATSearchBundle\Doctrine\Converter\InputQueryToDoctrineQueryFilters;
+use ATSearchBundle\Query\SearchQuery;
+use ATSearchBundle\Query\SortClause\SortByField;
+use ATSearchBundle\Query\SortClause\SortByRelationField;
 
 class QueryToRepositoryQuery implements LocaleAwareInterface
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace ATernovtsii\SearchBundle\Query\SortClause;
+namespace ATSearchBundle\Query\SortClause;
 
-use ATernovtsii\SearchBundle\Query\SortQueryCriterion;
+use ATSearchBundle\Query\SortQueryCriterion;
 
 readonly class SortByRelationField implements SortQueryCriterion
 {

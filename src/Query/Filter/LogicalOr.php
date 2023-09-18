@@ -1,8 +1,8 @@
 <?php
 
-namespace ATernovtsii\SearchBundle\Query\Filter;
+namespace ATSearchBundle\Query\Filter;
 
-use ATernovtsii\SearchBundle\Query\FilterQueryCriterion;
+use ATSearchBundle\Query\FilterQueryCriterion;
 
 class LogicalOr implements FilterQueryCriterion
 {

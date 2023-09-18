@@ -1,12 +1,12 @@
 <?php
 
-namespace ATernovtsii\SearchBundle\Elastic\Handler;
+namespace ATSearchBundle\Elastic\Handler;
 
 use OpenSearch\Client;
 use OpenSearch\Common\Exceptions\{ClientErrorResponseException, ServerErrorResponseException};
-use ATernovtsii\SearchBundle\Elastic\ValueObject\Document;
-use ATernovtsii\SearchBundle\Elastic\ValueObject\Query;
-use ATernovtsii\SearchBundle\ValueObject\Result;
+use ATSearchBundle\Elastic\ValueObject\Document;
+use ATSearchBundle\Elastic\ValueObject\Query;
+use ATSearchBundle\ValueObject\Result;
 
 readonly class SearchHandler
 {

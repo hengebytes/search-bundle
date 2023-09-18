@@ -1,10 +1,10 @@
 <?php
 
-namespace ATernovtsii\SearchBundle\Elastic\Service;
+namespace ATSearchBundle\Elastic\Service;
 
-use ATernovtsii\SearchBundle\Elastic\Generator\IndexDocumentInterface;
-use ATernovtsii\SearchBundle\Elastic\ValueObject\Document;
-use ATernovtsii\SearchBundle\Event\IndexDocumentCreatedEvent;
+use ATSearchBundle\Elastic\Generator\IndexDocumentInterface;
+use ATSearchBundle\Elastic\ValueObject\Document;
+use ATSearchBundle\Event\IndexDocumentCreatedEvent;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\DependencyInjection\Attribute\TaggedIterator;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;

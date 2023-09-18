@@ -1,6 +1,6 @@
 <?php
 
-namespace ATernovtsii\SearchBundle;
+namespace ATSearchBundle;
 
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 

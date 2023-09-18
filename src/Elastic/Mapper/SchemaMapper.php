@@ -1,8 +1,8 @@
 <?php
 
-namespace ATernovtsii\SearchBundle\Elastic\Mapper;
+namespace ATSearchBundle\Elastic\Mapper;
 
-use ATernovtsii\SearchBundle\Enum\FieldType;
+use ATSearchBundle\Enum\FieldType;
 
 abstract class SchemaMapper
 {

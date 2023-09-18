@@ -1,10 +1,10 @@
 <?php
 
-namespace ATernovtsii\SearchBundle\Service;
+namespace ATSearchBundle\Service;
 
-use ATernovtsii\SearchBundle\Exception\NoConverterException;
-use ATernovtsii\SearchBundle\Query\SearchQuery;
-use ATernovtsii\SearchBundle\ValueObject\Result;
+use ATSearchBundle\Exception\NoConverterException;
+use ATSearchBundle\Query\SearchQuery;
+use ATSearchBundle\ValueObject\Result;
 
 interface SearchServiceInterface
 {

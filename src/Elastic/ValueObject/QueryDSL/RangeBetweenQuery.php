@@ -1,6 +1,6 @@
 <?php
 
-namespace ATernovtsii\SearchBundle\Elastic\ValueObject\QueryDSL;
+namespace ATSearchBundle\Elastic\ValueObject\QueryDSL;
 
 readonly class RangeBetweenQuery implements QueryDSLInterface
 {

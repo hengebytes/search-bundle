@@ -1,8 +1,8 @@
 <?php
 
-namespace ATernovtsii\SearchBundle\Elastic\Resolver;
+namespace ATSearchBundle\Elastic\Resolver;
 
-use ATernovtsii\SearchBundle\Elastic\Mapper\SchemaMapper;
+use ATSearchBundle\Elastic\Mapper\SchemaMapper;
 
 readonly class FieldTypeResolver
 {

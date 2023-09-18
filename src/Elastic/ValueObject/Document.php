@@ -1,6 +1,6 @@
 <?php
 
-namespace ATernovtsii\SearchBundle\Elastic\ValueObject;
+namespace ATSearchBundle\Elastic\ValueObject;
 
 class Document
 {

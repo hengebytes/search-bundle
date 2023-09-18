@@ -1,11 +1,11 @@
 <?php
 
-namespace ATernovtsii\SearchBundle\Elastic\Converter\SortQuery;
+namespace ATSearchBundle\Elastic\Converter\SortQuery;
 
-use ATernovtsii\SearchBundle\Elastic\Converter\{InputQueryToElasticSort, SortInputQueryToElasticConverterInterface};
-use ATernovtsii\SearchBundle\Elastic\Resolver\FieldNameResolver;
-use ATernovtsii\SearchBundle\Query\SortClause\SortByField;
-use ATernovtsii\SearchBundle\Query\SortQueryCriterion;
+use ATSearchBundle\Elastic\Converter\{InputQueryToElasticSort, SortInputQueryToElasticConverterInterface};
+use ATSearchBundle\Elastic\Resolver\FieldNameResolver;
+use ATSearchBundle\Query\SortClause\SortByField;
+use ATSearchBundle\Query\SortQueryCriterion;
 use InvalidArgumentException;
 use RuntimeException;
 

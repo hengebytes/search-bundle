@@ -1,9 +1,9 @@
 <?php
 
-namespace ATernovtsii\SearchBundle\Elastic\Converter;
+namespace ATSearchBundle\Elastic\Converter;
 
 use Symfony\Component\DependencyInjection\Attribute\AutoconfigureTag;
-use ATernovtsii\SearchBundle\Query\SortQueryCriterion;
+use ATSearchBundle\Query\SortQueryCriterion;
 
 #[AutoconfigureTag('at_search.elastic.query.sort_converter')]
 interface SortInputQueryToElasticConverterInterface

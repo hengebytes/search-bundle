@@ -1,13 +1,13 @@
 <?php
 
-namespace ATernovtsii\SearchBundle\Doctrine\Converter\FilterQuery;
+namespace ATSearchBundle\Doctrine\Converter\FilterQuery;
 
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Query\Expr\{Comparison, Func, Orx};
-use ATernovtsii\SearchBundle\Doctrine\JoinAwareQueryBuilder;
-use ATernovtsii\SearchBundle\Query\Filter\RelationFieldFilter;
-use ATernovtsii\SearchBundle\Query\Filter\FieldFilter;
-use ATernovtsii\SearchBundle\Query\Operator;
+use ATSearchBundle\Doctrine\JoinAwareQueryBuilder;
+use ATSearchBundle\Query\Filter\RelationFieldFilter;
+use ATSearchBundle\Query\Filter\FieldFilter;
+use ATSearchBundle\Query\Operator;
 use function count;
 use function is_array;
 

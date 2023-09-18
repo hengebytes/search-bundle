@@ -1,12 +1,12 @@
 <?php
 
-namespace ATernovtsii\SearchBundle\Doctrine\Converter;
+namespace ATSearchBundle\Doctrine\Converter;
 
 use Doctrine\DBAL\Query\Expression\CompositeExpression;
 use Symfony\Component\DependencyInjection\Attribute\TaggedIterator;
-use ATernovtsii\SearchBundle\Doctrine\JoinAwareQueryBuilder;
-use ATernovtsii\SearchBundle\Exception\NoConverterException;
-use ATernovtsii\SearchBundle\Query\FilterQueryCriterion;
+use ATSearchBundle\Doctrine\JoinAwareQueryBuilder;
+use ATSearchBundle\Exception\NoConverterException;
+use ATSearchBundle\Query\FilterQueryCriterion;
 
 class InputQueryToDoctrineQueryFilters
 {

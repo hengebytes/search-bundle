@@ -1,10 +1,10 @@
 <?php
 
-namespace ATernovtsii\SearchBundle\Exception;
+namespace ATSearchBundle\Exception;
 
 use Exception;
-use ATernovtsii\SearchBundle\Query\FilterQueryCriterion;
-use ATernovtsii\SearchBundle\Query\SortQueryCriterion;
+use ATSearchBundle\Query\FilterQueryCriterion;
+use ATSearchBundle\Query\SortQueryCriterion;
 
 class NoConverterException extends Exception
 {

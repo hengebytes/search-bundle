@@ -1,15 +1,15 @@
 <?php
 
-namespace ATernovtsii\SearchBundle\Elastic\Service;
+namespace ATSearchBundle\Elastic\Service;
 
-use ATernovtsii\SearchBundle\Elastic\Converter\InputQueryToElasticFilter;
-use ATernovtsii\SearchBundle\Elastic\Converter\InputQueryToElasticSort;
-use ATernovtsii\SearchBundle\Elastic\Handler\SearchHandler;
-use ATernovtsii\SearchBundle\Elastic\ValueObject\Query;
-use ATernovtsii\SearchBundle\Exception\NoConverterException;
-use ATernovtsii\SearchBundle\Query\SearchQuery;
-use ATernovtsii\SearchBundle\Service\{SearchServiceInterface};
-use ATernovtsii\SearchBundle\ValueObject\Result;
+use ATSearchBundle\Elastic\Converter\InputQueryToElasticFilter;
+use ATSearchBundle\Elastic\Converter\InputQueryToElasticSort;
+use ATSearchBundle\Elastic\Handler\SearchHandler;
+use ATSearchBundle\Elastic\ValueObject\Query;
+use ATSearchBundle\Exception\NoConverterException;
+use ATSearchBundle\Query\SearchQuery;
+use ATSearchBundle\Service\{SearchServiceInterface};
+use ATSearchBundle\ValueObject\Result;
 
 readonly class SearchService implements SearchServiceInterface
 {

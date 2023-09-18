@@ -1,10 +1,10 @@
 <?php
 
-namespace ATernovtsii\SearchBundle\Elastic\Generator;
+namespace ATSearchBundle\Elastic\Generator;
 
-use ATernovtsii\SearchBundle\Elastic\Converter\FilterInputQueryToElasticConverterInterface;
-use ATernovtsii\SearchBundle\Elastic\Mapper\SchemaMapper;
-use ATernovtsii\SearchBundle\Enum\FieldType;
+use ATSearchBundle\Elastic\Converter\FilterInputQueryToElasticConverterInterface;
+use ATSearchBundle\Elastic\Mapper\SchemaMapper;
+use ATSearchBundle\Enum\FieldType;
 
 readonly class DocumentFieldMetadata
 {

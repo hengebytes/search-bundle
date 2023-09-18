@@ -1,6 +1,6 @@
 <?php
 
-namespace ATernovtsii\SearchBundle\Enum;
+namespace ATSearchBundle\Enum;
 
 enum FieldType: string
 {

@@ -1,10 +1,10 @@
 <?php
 
-namespace ATernovtsii\SearchBundle\Elastic\Converter;
+namespace ATSearchBundle\Elastic\Converter;
 
 use Symfony\Component\DependencyInjection\Attribute\TaggedIterator;
-use ATernovtsii\SearchBundle\Exception\NoConverterException;
-use ATernovtsii\SearchBundle\Query\FilterQueryCriterion;
+use ATSearchBundle\Exception\NoConverterException;
+use ATSearchBundle\Query\FilterQueryCriterion;
 
 class InputQueryToElasticFilter
 {

@@ -1,10 +1,10 @@
 <?php
 
-namespace ATernovtsii\SearchBundle\Elastic\Converter;
+namespace ATSearchBundle\Elastic\Converter;
 
 use Symfony\Component\DependencyInjection\Attribute\TaggedIterator;
-use ATernovtsii\SearchBundle\Exception\NoConverterException;
-use ATernovtsii\SearchBundle\Query\SortQueryCriterion;
+use ATSearchBundle\Exception\NoConverterException;
+use ATSearchBundle\Query\SortQueryCriterion;
 
 class InputQueryToElasticSort
 {

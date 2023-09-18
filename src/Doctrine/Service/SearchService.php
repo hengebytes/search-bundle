@@ -1,14 +1,14 @@
 <?php
 
-namespace ATernovtsii\SearchBundle\Doctrine\Service;
+namespace ATSearchBundle\Doctrine\Service;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\NoResultException;
-use ATernovtsii\SearchBundle\Doctrine\QueryToRepositoryQuery;
-use ATernovtsii\SearchBundle\Query\SearchQuery;
-use ATernovtsii\SearchBundle\Service\SearchServiceInterface;
-use ATernovtsii\SearchBundle\ValueObject\Result;
+use ATSearchBundle\Doctrine\QueryToRepositoryQuery;
+use ATSearchBundle\Query\SearchQuery;
+use ATSearchBundle\Service\SearchServiceInterface;
+use ATSearchBundle\ValueObject\Result;
 
 readonly class SearchService implements SearchServiceInterface
 {

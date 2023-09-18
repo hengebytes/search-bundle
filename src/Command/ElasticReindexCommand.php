@@ -1,7 +1,7 @@
 <?php
 
 
-namespace ATernovtsii\SearchBundle\Command;
+namespace ATSearchBundle\Command;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\{Attribute\AsCommand,
@@ -10,8 +10,8 @@ use Symfony\Component\Console\{Attribute\AsCommand,
     Input\InputInterface,
     Output\OutputInterface
 };
-use ATernovtsii\SearchBundle\Elastic\Resolver\DocumentResolver;
-use ATernovtsii\SearchBundle\Elastic\Service\IndexManager;
+use ATSearchBundle\Elastic\Resolver\DocumentResolver;
+use ATSearchBundle\Elastic\Service\IndexManager;
 
 #[AsCommand(name: 'at_search:elastic:reindex')]
 class ElasticReindexCommand extends Command

@@ -1,12 +1,12 @@
 <?php
 
-namespace ATernovtsii\SearchBundle\Query;
+namespace ATSearchBundle\Query;
 
-use ATernovtsii\SearchBundle\Enum\SearchSourceEnum;
-use ATernovtsii\SearchBundle\Query\Filter\LogicalAnd;
-use ATernovtsii\SearchBundle\Query\SortClause\SortByField;
-use ATernovtsii\SearchBundle\Query\SortClause\SortByRelationField;
-use ATernovtsii\SearchBundle\ValueObject\Result;
+use ATSearchBundle\Enum\SearchSourceEnum;
+use ATSearchBundle\Query\Filter\LogicalAnd;
+use ATSearchBundle\Query\SortClause\SortByField;
+use ATSearchBundle\Query\SortClause\SortByRelationField;
+use ATSearchBundle\ValueObject\Result;
 
 class SearchQuery
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace ATernovtsii\SearchBundle\ValueObject;
+namespace ATSearchBundle\ValueObject;
 
 readonly class Result
 {

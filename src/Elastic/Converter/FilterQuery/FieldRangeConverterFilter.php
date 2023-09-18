@@ -1,16 +1,16 @@
 <?php
 
-namespace ATernovtsii\SearchBundle\Elastic\Converter\FilterQuery;
+namespace ATSearchBundle\Elastic\Converter\FilterQuery;
 
-use ATernovtsii\SearchBundle\Elastic\Converter\FilterInputQueryToElasticConverterInterface;
-use ATernovtsii\SearchBundle\Elastic\Converter\InputQueryToElasticFilter;
-use ATernovtsii\SearchBundle\Elastic\Resolver\FieldNameResolver;
-use ATernovtsii\SearchBundle\Elastic\Resolver\FieldTypeResolver;
-use ATernovtsii\SearchBundle\Elastic\ValueObject\QueryDSL\RangeQuery;
-use ATernovtsii\SearchBundle\Query\Filter\CustomFieldFilter;
-use ATernovtsii\SearchBundle\Query\Filter\FieldFilter;
-use ATernovtsii\SearchBundle\Query\FilterQueryCriterion;
-use ATernovtsii\SearchBundle\Query\Operator;
+use ATSearchBundle\Elastic\Converter\FilterInputQueryToElasticConverterInterface;
+use ATSearchBundle\Elastic\Converter\InputQueryToElasticFilter;
+use ATSearchBundle\Elastic\Resolver\FieldNameResolver;
+use ATSearchBundle\Elastic\Resolver\FieldTypeResolver;
+use ATSearchBundle\Elastic\ValueObject\QueryDSL\RangeQuery;
+use ATSearchBundle\Query\Filter\CustomFieldFilter;
+use ATSearchBundle\Query\Filter\FieldFilter;
+use ATSearchBundle\Query\FilterQueryCriterion;
+use ATSearchBundle\Query\Operator;
 use InvalidArgumentException;
 use function in_array;
 
