@@ -64,8 +64,8 @@ at_search:
 
 namespace App\Entity;
 
+use ATSearchBundle\Annotation as ATSearch;
 use Doctrine\ORM\Mapping as ORM;
-use ATSearchBundle\Elastic\Annotation as ATSearch;
 
 #[ATSearch\Index]
 #[ORM\Entity]
@@ -81,7 +81,7 @@ class User
     #[ORM\Column(length: 128)]
     public ?string $firstName = null;
 
-    #[ATSearch\ESMultiString(subFields: 'email')]
+    #[ATSearch\FieldMultiString(subFields: 'email')]
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Email::class)]
     public Collection $emails;
 ```

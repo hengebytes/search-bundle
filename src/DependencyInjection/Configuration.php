@@ -15,7 +15,7 @@ class Configuration implements ConfigurationInterface
         $rootNode
             ->children()
 
-                ->arrayNode('elastic')
+                ->arrayNode('search')
                     ->children()
                         ->booleanNode('enabled')->defaultFalse()->end()
                         ->arrayNode('mappings')
