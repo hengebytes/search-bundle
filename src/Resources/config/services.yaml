@@ -5,4 +5,4 @@ services:
 
     ATSearchBundle\:
         resource: '../../'
-        exclude: '../../{DependencyInjection,Resources,Query,Exception,Enum,Elastic/ValueObject}'
+        exclude: '../../{DependencyInjection,Resources,Query,Exception,Enum,Search/ValueObject}'

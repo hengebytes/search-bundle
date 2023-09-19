@@ -20,7 +20,7 @@ readonly class SearchServiceFacade implements SearchServiceInterface
 
     public function searchBySearchQuery(SearchQuery $searchQuery): Result
     {
-        if ($searchQuery->searchSource === SearchSourceEnum::ELASTIC) {
+        if ($searchQuery->searchSource === SearchSourceEnum::SEARCH) {
             return $this->elasticSearchService->searchBySearchQuery($searchQuery);
         }
 
