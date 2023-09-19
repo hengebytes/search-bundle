@@ -5,7 +5,7 @@ namespace ATSearchBundle\Search\Converter;
 use Symfony\Component\DependencyInjection\Attribute\AutoconfigureTag;
 use ATSearchBundle\Query\FilterQueryCriterion;
 
-#[AutoconfigureTag('at_search.elastic.query.filter_converter')]
+#[AutoconfigureTag('at_search.search.query.filter_converter')]
 interface FilterInputQueryToElasticConverterInterface
 {
     // This constant is used for fields that are not used for filtering.

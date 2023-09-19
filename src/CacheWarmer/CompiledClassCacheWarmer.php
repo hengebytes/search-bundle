@@ -4,7 +4,7 @@
 namespace ATSearchBundle\CacheWarmer;
 
 use Symfony\Component\HttpKernel\CacheWarmer\CacheWarmerInterface;
-use ATSearchBundle\Elastic\Generator\IndexDocumentMetadataGenerator;
+use ATSearchBundle\Search\Generator\IndexDocumentMetadataGenerator;
 
 final readonly class CompiledClassCacheWarmer implements CacheWarmerInterface
 {

@@ -11,7 +11,7 @@ readonly class DocumentResolver
      * @param iterable|IndexDocumentInterface[] $indexDocuments
      */
     public function __construct(
-        #[TaggedIterator('at_search.elastic.index_document')]
+        #[TaggedIterator('at_search.search.index_document')]
         private iterable $indexDocuments,
     ) {
     }

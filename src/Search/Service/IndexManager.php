@@ -7,7 +7,7 @@ use ATSearchBundle\Search\ValueObject\Document;
 
 readonly class IndexManager
 {
-    public function __construct(private Client $elasticClient, private DocumentGenerator $documentGenerator)
+    public function __construct(private Client $client, private DocumentGenerator $documentGenerator)
     {
     }
 
@@ -25,7 +25,7 @@ readonly class IndexManager
             $index .= '*';
         }
 
-        $this->elasticClient->indices()->delete(['index' => $index]);
+        $this->client->indices()->delete(['index' => $index]);
     }
 
     public function index(int $id, string $entityName): void
@@ -44,11 +44,11 @@ readonly class IndexManager
         }
 
         if (!empty($params['body'])) {
-            $this->elasticClient->bulk($params);
+            $this->client->bulk($params);
         }
 
         if ($ids) {
-            $this->elasticClient->indices()->refresh(['index' => Document::$indexPrefix . '*']);
+            $this->client->indices()->refresh(['index' => Document::$indexPrefix . '*']);
         }
     }
 
@@ -74,7 +74,7 @@ readonly class IndexManager
         $params['body'][] = $document->body;
 
         if ($key % 1000 === 0) {
-            $this->elasticClient->bulk($params);
+            $this->client->bulk($params);
 
             // erase the old bulk request
             $params = ['body' => []];
@@ -87,7 +87,7 @@ readonly class IndexManager
     {
         $index = $document->getIndex();
         if (!$document->body) {
-            $this->elasticClient->deleteByQuery([
+            $this->client->deleteByQuery([
                 'index' => $index, // delete from all indices
                 'body' => [
                     'query' => [
@@ -98,12 +98,12 @@ readonly class IndexManager
                 ],
             ]);
         } else {
-            $this->elasticClient->index([
+            $this->client->index([
                 'index' => $index,
                 'id' => $document->id,
                 'body' => $document->body,
             ]);
         }
-        $this->elasticClient->indices()->refresh(['index' => $index]);
+        $this->client->indices()->refresh(['index' => $index]);
     }
 }

@@ -16,7 +16,7 @@ class IndexDocumentMetadataGenerator
         private readonly IndexDocumentBuilder $indexDocumentBuilder,
         private readonly array $mappings = [],
         public ?string $cacheBaseDir = null,
-        private readonly bool $elasticEnabled = false,
+        private readonly bool $searchEnabled = false,
     ) {
     }
 
@@ -34,7 +34,7 @@ class IndexDocumentMetadataGenerator
         }
 
         $classes = array_merge(...$classes);
-        if ($mapOnly || !$this->elasticEnabled) {
+        if ($mapOnly || !$this->searchEnabled) {
             return $classes;
         }
         $content = "<?php\nreturn " . var_export($classes, true) . ';';

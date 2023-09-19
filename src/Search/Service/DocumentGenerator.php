@@ -17,7 +17,7 @@ readonly class DocumentGenerator
      * @param EventDispatcherInterface $eventDispatcher
      */
     public function __construct(
-        #[TaggedIterator('at_search.elastic.index_document')]
+        #[TaggedIterator('at_search.search.index_document')]
         private iterable $indexDocuments,
         private EntityManagerInterface $em,
         private EventDispatcherInterface $eventDispatcher

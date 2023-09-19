@@ -11,7 +11,7 @@ class IndexExtractor
      */
     private iterable $extractors;
 
-    public function __construct(#[TaggedIterator('at_search.elastic.index.extractor')] iterable $extractors)
+    public function __construct(#[TaggedIterator('at_search.search.index.extractor')] iterable $extractors)
     {
         $this->extractors = $extractors;
     }

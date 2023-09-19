@@ -3,7 +3,7 @@
 namespace ATSearchBundle\Service;
 
 use ATSearchBundle\Doctrine\Service\SearchService as DoctrineSearchServiceAlias;
-use ATSearchBundle\Elastic\Service\SearchService as ElasticSearchServiceAlias;
+use ATSearchBundle\Search\Service\SearchService as ElasticSearchServiceAlias;
 use ATSearchBundle\Enum\SearchSourceEnum;
 use ATSearchBundle\Query\SearchQuery;
 use ATSearchBundle\ValueObject\Result;

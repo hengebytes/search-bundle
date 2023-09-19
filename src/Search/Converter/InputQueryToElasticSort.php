@@ -11,7 +11,7 @@ class InputQueryToElasticSort
     /** @var SortInputQueryToElasticConverterInterface[] */
     private iterable $converters;
 
-    public function __construct(#[TaggedIterator('at_search.elastic.query.sort_converter')] iterable $converters)
+    public function __construct(#[TaggedIterator('at_search.search.query.sort_converter')] iterable $converters)
     {
         $this->converters = $converters;
     }

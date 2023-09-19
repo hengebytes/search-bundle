@@ -2,7 +2,7 @@
 
 namespace ATSearchBundle\EventSubscriber;
 
-use ATSearchBundle\Elastic\Generator\IndexExtractor;
+use ATSearchBundle\Search\Generator\IndexExtractor;
 use ATSearchBundle\Event\IndexDocumentCreatedEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 

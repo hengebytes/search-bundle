@@ -3,7 +3,7 @@
 namespace ATSearchBundle\Event;
 
 use Symfony\Contracts\EventDispatcher\Event;
-use ATSearchBundle\Elastic\ValueObject\Document;
+use ATSearchBundle\Search\ValueObject\Document;
 
 class IndexDocumentCreatedEvent extends Event
 {

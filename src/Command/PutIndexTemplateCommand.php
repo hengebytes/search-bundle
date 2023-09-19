@@ -10,11 +10,11 @@ use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use ATSearchBundle\Elastic\Mapper\SchemaMapper;
-use ATSearchBundle\Elastic\ValueObject\Document;
+use ATSearchBundle\Search\Mapper\SchemaMapper;
+use ATSearchBundle\Search\ValueObject\Document;
 
-#[AsCommand(name: 'at_search:put_elastic:index_template')]
-class PutElasticIndexTemplateCommand extends Command
+#[AsCommand(name: 'at_search:elastic:put_index_template')]
+class PutIndexTemplateCommand extends Command
 {
     public function __construct(private readonly Client $client)
     {
@@ -24,7 +24,7 @@ class PutElasticIndexTemplateCommand extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $io = new SymfonyStyle($input, $output);
-        $io->title('Put elastic index template - start');
+        $io->title('Put index template - start');
 
         $alreadyExists = false;
 
@@ -33,7 +33,7 @@ class PutElasticIndexTemplateCommand extends Command
             $this->client->indices()->putIndexTemplate($request);
         } catch (Exception $e) {
             if (!str_contains($e->getMessage(), 'already exists') && !str_contains($e->getMessage(), 'default')) {
-                $io->error('Put elastic index template - error');
+                $io->error('Put index template - error');
             } else {
                 $alreadyExists = true;
                 $io->warning('Index template already exists');

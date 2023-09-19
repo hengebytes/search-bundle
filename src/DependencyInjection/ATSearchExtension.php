@@ -7,8 +7,8 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
-use ATSearchBundle\Elastic\Generator\IndexDocumentBuilder;
-use ATSearchBundle\Elastic\Generator\IndexDocumentMetadataGenerator;
+use ATSearchBundle\Search\Generator\IndexDocumentBuilder;
+use ATSearchBundle\Search\Generator\IndexDocumentMetadataGenerator;
 
 class ATSearchExtension extends Extension
 {
@@ -23,14 +23,14 @@ class ATSearchExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
-        $container->setParameter('at_search.elastic.enabled', $config['elastic']['enabled']);
-        if (!$config['elastic']['enabled']) {
+        $container->setParameter('at_search.search.enabled', $config['search']['enabled']);
+        if (!$config['search']['enabled']) {
             $container->removeAlias('at_search.cache_compiler');
 
             return;
         }
 
-        $this->loadIndexDocumentGenerator($container, $config['elastic']['mappings']);
+        $this->loadIndexDocumentGenerator($container, $config['search']['mappings']);
     }
 
     private function loadConfigFiles(ContainerBuilder $container): void
@@ -45,7 +45,7 @@ class ATSearchExtension extends Extension
         $definition = $container->getDefinition(IndexDocumentMetadataGenerator::class);
         $definition->setArgument(2, $mappings);
         $definition->setArgument(3, $container->getParameter('kernel.cache_dir'));
-        $definition->setArgument(4, $container->getParameter('at_search.elastic.enabled'));
+        $definition->setArgument(4, $container->getParameter('at_search.search.enabled'));
 
         $indexDocumentMetadataGenerator = new IndexDocumentMetadataGenerator(
             new Filesystem(),
@@ -60,7 +60,7 @@ class ATSearchExtension extends Extension
             $definition->setPublic(false);
             $definition->setAutowired(true);
             $definition->setAutoconfigured(true);
-            $definition->addTag('at_search.elastic.index_document');
+            $definition->addTag('at_search.search.index_document');
         }
     }
 

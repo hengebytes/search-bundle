@@ -10,11 +10,11 @@ use Symfony\Component\Console\{Attribute\AsCommand,
     Input\InputInterface,
     Output\OutputInterface
 };
-use ATSearchBundle\Elastic\Resolver\DocumentResolver;
-use ATSearchBundle\Elastic\Service\IndexManager;
+use ATSearchBundle\Search\Resolver\DocumentResolver;
+use ATSearchBundle\Search\Service\IndexManager;
 
-#[AsCommand(name: 'at_search:elastic:reindex')]
-class ElasticReindexCommand extends Command
+#[AsCommand(name: 'at_search:reindex')]
+class ReindexCommand extends Command
 {
     public function __construct(
         private readonly IndexManager $indexManager,
@@ -70,7 +70,7 @@ class ElasticReindexCommand extends Command
             return Command::FAILURE;
         }
 
-        $output->writeln('Reindex elastic - start');
+        $output->writeln('Reindex - start');
         if ($purge) {
             try {
                 $this->indexManager->purge($tenantId, $entityClass);

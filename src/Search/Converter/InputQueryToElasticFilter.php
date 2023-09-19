@@ -11,7 +11,7 @@ class InputQueryToElasticFilter
     /** @var FilterInputQueryToElasticConverterInterface[] */
     private iterable $converters;
 
-    public function __construct(#[TaggedIterator('at_search.elastic.query.filter_converter')] iterable $converters)
+    public function __construct(#[TaggedIterator('at_search.search.query.filter_converter')] iterable $converters)
     {
         $this->converters = $converters;
     }
