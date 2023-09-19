@@ -116,7 +116,7 @@ class IndexDocumentBuilder
         $class->createMethod('getDefaultPriority')
             ->setReturnType('int')
             ->setDocBlock('{@inheritdoc}')
-            ->append("return '$indexPriority'");
+            ->append("return $indexPriority");
 
         $class->createMethod('getTenantId')
             ->setReturnType('string')
