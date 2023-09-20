@@ -5,7 +5,6 @@ namespace ATSearchBundle\Search\Generator;
 use Composer\Autoload\ClassLoader;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Finder\Finder;
-use Symfony\Component\Finder\SplFileInfo;
 
 class IndexDocumentMetadataGenerator
 {
@@ -20,21 +19,21 @@ class IndexDocumentMetadataGenerator
     ) {
     }
 
-    public function compile($mapOnly = false): array
+    public function compile(): array
     {
         $cacheDir = $this->getCacheDir();
-        if (!$mapOnly && $this->filesystem->exists($cacheDir)) {
+        if ($this->filesystem->exists($cacheDir)) {
             $this->filesystem->remove($cacheDir);
         }
 
         $classes = [[]];
         foreach ($this->mappings as $mapping) {
-            $classMap = $this->generateClasses($mapping, $mapOnly);
+            $classMap = $this->generateClasses($mapping);
             $classes[] = $classMap;
         }
 
         $classes = array_merge(...$classes);
-        if ($mapOnly || !$this->searchEnabled) {
+        if (!$this->searchEnabled) {
             return $classes;
         }
         $content = "<?php\nreturn " . var_export($classes, true) . ';';
@@ -46,6 +45,17 @@ class IndexDocumentMetadataGenerator
         $this->loadClasses(true);
 
         return $classes;
+    }
+
+    public function compileClassesForTags(): array
+    {
+        $classes = [[]];
+        foreach ($this->mappings as $mapping) {
+            $classMap = $this->generateClassesWithPriority($mapping);
+            $classes[] = $classMap;
+        }
+
+        return array_merge(...$classes);
     }
 
     public function loadClasses(bool $forceReload = false): void
@@ -81,31 +91,54 @@ class IndexDocumentMetadataGenerator
         return $this->getCacheDir() . '/__classes.map';
     }
 
-    private function generateClasses(array $mapping, bool $mapOnly = false): array
+    private function generateClasses(array $mapping): array
     {
         $classes = [];
         $outputDirectory = $this->getCacheDir();
-        $finder = new Finder();
-        $files = $finder->files()->in($mapping['dir'])->name('*.php')->files();
-        /** @var SplFileInfo $class */
-        foreach ($files as $file) {
-            $className = explode('.', $file->getFilename())[0] ?? null;
-            if (!$className) {
-                continue;
-            }
-
+        $classNames = $this->getClassNames($mapping);
+        foreach ($classNames as $className) {
             $fileBuilder = $this->indexDocumentBuilder->build($mapping['namespace'], $className);
             if (!$fileBuilder) {
                 continue;
             }
             $documentClassName = $className . 'IndexDocument';
-            if (!$mapOnly) {
-                $fileBuilder->save($outputDirectory . '/' . $documentClassName . '.php');
-            }
+            $fileBuilder->save($outputDirectory . '/' . $documentClassName . '.php');
 
             $path = "$outputDirectory/$documentClassName.php";
             $classes["ATSearchBundle\\DocumentMetadata\\$documentClassName"] = $path;
+        }
 
+        return $classes;
+    }
+
+    private function getClassNames(array $mapping): array
+    {
+        $classNames = [];
+        $finder = new Finder();
+        $files = $finder->files()->in($mapping['dir'])->name('*.php')->files();
+        foreach ($files as $file) {
+            $className = explode('.', $file->getFilename())[0] ?? null;
+            if (!$className) {
+                continue;
+            }
+            $classNames[] = $className;
+        }
+
+        return $classNames;
+    }
+
+    private function generateClassesWithPriority(array $mapping): array
+    {
+        $classes = [];
+        $classNames = $this->getClassNames($mapping);
+        foreach ($classNames as $className) {
+            $fileBuilder = $this->indexDocumentBuilder->build($mapping['namespace'], $className);
+            if (!$fileBuilder) {
+                continue;
+            }
+
+            $filePriority = $this->indexDocumentBuilder->getClassPriority($mapping['namespace'], $className);
+            $classes["ATSearchBundle\\DocumentMetadata\\{$className}IndexDocument"] = $filePriority;
         }
 
         return $classes;

@@ -28,7 +28,6 @@ class IndexDocumentBuilder
     public function build(string $namespace, string $className): ?PhpFile
     {
         $indexName = '';
-        $indexPriority = 1;
         $reflectionClass = new ReflectionClass($namespace . '\\' . $className);
         $attributes = $reflectionClass->getAttributes();
         $hasIndexAttribute = false;
@@ -36,7 +35,6 @@ class IndexDocumentBuilder
             $hasIndexAttribute = $attribute->getName() === Index::class;
             if ($hasIndexAttribute) {
                 $indexName = $attribute->getArguments()['name'] ?? $this->toSnakeCase($className);
-                $indexPriority = $attribute->getArguments()['priority'] ?? 1;
                 break;
             }
         }
@@ -113,11 +111,6 @@ class IndexDocumentBuilder
             ->setDocBlock('{@inheritdoc}')
             ->append("return '$indexName'");
 
-        $class->createMethod('getDefaultPriority')
-            ->setReturnType('int')
-            ->setDocBlock('{@inheritdoc}')
-            ->append("return $indexPriority");
-
         $class->createMethod('getTenantId')
             ->setReturnType('string')
             ->setDocBlock('{@inheritdoc}')
@@ -138,6 +131,21 @@ class IndexDocumentBuilder
 
         return $fileBuilder;
     }
+
+    public function getClassPriority(string $namespace, string $className): int
+    {
+        $indexPriority = 0;
+        $reflectionClass = new ReflectionClass($namespace . '\\' . $className);
+        $attributes = $reflectionClass->getAttributes();
+        foreach ($attributes as $attribute) {
+            if ($attribute->getName() === Index::class) {
+                return $attribute->getArguments()['priority'] ?? 0;
+            }
+        }
+
+        return $indexPriority;
+    }
+
 
     private function getTenantIdFunc(ReflectionAttribute $attribute, ReflectionProperty|ReflectionMethod $property): ?string
     {

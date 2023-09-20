@@ -54,13 +54,13 @@ class ATSearchExtension extends Extension
             $container->getParameter('kernel.cache_dir')
         );
 
-        $generatedClasses = $indexDocumentMetadataGenerator->compile(true);
-        foreach ($generatedClasses as $class => $file) {
+        $generatedClasses = $indexDocumentMetadataGenerator->compileClassesForTags();
+        foreach ($generatedClasses as $class => $priority) {
             $definition = $container->register($class);
             $definition->setPublic(false);
             $definition->setAutowired(true);
             $definition->setAutoconfigured(true);
-            $definition->addTag('at_search.search.index_document');
+            $definition->addTag('at_search.search.index_document', ['priority' => $priority]);
         }
     }
 
