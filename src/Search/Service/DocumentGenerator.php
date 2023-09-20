@@ -82,7 +82,7 @@ readonly class DocumentGenerator
                 $indexDocument->getEntityClassName() === $entity::class
                 || is_subclass_of($entity, $indexDocument->getEntityClassName())
             ) {
-                return $indexDocument->getTenantId($entity);
+                return $indexDocument->getTenantId($entity) ?? Document::DEFAULT_TENANT_ID;
             }
         }
 

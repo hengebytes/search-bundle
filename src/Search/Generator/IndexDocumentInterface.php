@@ -8,7 +8,7 @@ interface IndexDocumentInterface
 
     public function getIndexName(): string;
 
-    public function getTenantId(object $entity): string;
+    public function getTenantId(object $entity): ?string;
 
     public function getFields(object $entity): array;
 }
