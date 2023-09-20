@@ -49,7 +49,10 @@ readonly class DocumentGenerator
     {
         $fields = [[]];
         foreach ($this->indexDocuments as $document) {
-            if ($document->getEntityClassName() !== $entity::class) {
+            if (
+                $document->getEntityClassName() !== $entity::class
+                && !is_subclass_of($entity, $document->getEntityClassName())
+            ) {
                 continue;
             }
             $fields[] = $document->getFields($entity);
@@ -61,7 +64,10 @@ readonly class DocumentGenerator
     public function getIndexName(string $targetEntity): string
     {
         foreach ($this->indexDocuments as $indexDocument) {
-            if ($indexDocument->getEntityClassName() === $targetEntity) {
+            if (
+                $indexDocument->getEntityClassName() === $targetEntity
+                || is_subclass_of($targetEntity, $indexDocument->getEntityClassName())
+            ) {
                 return $indexDocument->getIndexName();
             }
         }
@@ -72,7 +78,10 @@ readonly class DocumentGenerator
     private function getTenantId(object $entity): string
     {
         foreach ($this->indexDocuments as $indexDocument) {
-            if ($indexDocument->getEntityClassName() === $entity::class) {
+            if (
+                $indexDocument->getEntityClassName() === $entity::class
+                || is_subclass_of($entity, $indexDocument->getEntityClassName())
+            ) {
                 return $indexDocument->getTenantId($entity);
             }
         }
