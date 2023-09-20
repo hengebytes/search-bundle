@@ -112,7 +112,7 @@ class IndexDocumentBuilder
             ->append("return '$indexName'");
 
         $class->createMethod('getTenantId')
-            ->setReturnType('string')
+            ->setReturnType('?string')
             ->setDocBlock('{@inheritdoc}')
             ->addArgument('entity', 'object')
             ->append("return $tenantIdFunc");
