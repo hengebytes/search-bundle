@@ -88,7 +88,7 @@ readonly class IndexManager
         $index = $document->getIndex();
         if (!$document->body) {
             $this->client->deleteByQuery([
-                'index' => $index, // delete from all indices
+                'index' => $index,
                 'body' => [
                     'query' => [
                         'match' => [

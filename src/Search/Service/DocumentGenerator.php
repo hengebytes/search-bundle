@@ -32,17 +32,19 @@ readonly class DocumentGenerator
         if (!$entity) {
             $document->tenantId = '*';
 
-            $this->eventDispatcher->dispatch(new IndexDocumentCreatedEvent($document, $entity));
+            $indexDocumentCreatedEvent = new IndexDocumentCreatedEvent($document, $entity);
+            $this->eventDispatcher->dispatch($indexDocumentCreatedEvent);
 
-            return $document;
+            return $indexDocumentCreatedEvent->document;
         }
 
         $document->tenantId = $this->getTenantId($entity);
         $document->body = $this->getBody($entity);
 
-        $this->eventDispatcher->dispatch(new IndexDocumentCreatedEvent($document, $entity));
+        $indexDocumentCreatedEvent = new IndexDocumentCreatedEvent($document, $entity);
+        $this->eventDispatcher->dispatch($indexDocumentCreatedEvent);
 
-        return $document;
+        return $indexDocumentCreatedEvent->document;
     }
 
     private function getBody(object $entity): array

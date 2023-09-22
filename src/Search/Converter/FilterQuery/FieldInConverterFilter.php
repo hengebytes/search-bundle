@@ -2,8 +2,8 @@
 
 namespace ATSearchBundle\Search\Converter\FilterQuery;
 
-use ATSearchBundle\Search\Converter\FilterInputQueryToElasticConverterInterface;
-use ATSearchBundle\Search\Converter\InputQueryToElasticFilter;
+use ATSearchBundle\Search\Converter\FilterInputQueryToSearchQueryConverterInterface;
+use ATSearchBundle\Search\Converter\InputQueryToSearchFilter;
 use ATSearchBundle\Search\Resolver\FieldNameResolver;
 use ATSearchBundle\Search\Resolver\FieldTypeResolver;
 use ATSearchBundle\Search\ValueObject\QueryDSL\{TermQuery, TermsQuery};
@@ -15,13 +15,13 @@ use ATSearchBundle\Query\Operator;
 use InvalidArgumentException;
 use function is_array;
 
-readonly class FieldInConverterFilter implements FilterInputQueryToElasticConverterInterface
+readonly class FieldInConverterFilter implements FilterInputQueryToSearchQueryConverterInterface
 {
     public function __construct(private FieldNameResolver $fieldNameResolver, private FieldTypeResolver $fieldTypeResolver)
     {
     }
 
-    public function convert(FilterQueryCriterion $criterion, InputQueryToElasticFilter $converter): array
+    public function convert(FilterQueryCriterion $criterion, InputQueryToSearchFilter $converter): array
     {
         if (!$criterion instanceof FieldFilter
             && !$criterion instanceof CustomFieldFilter
@@ -38,7 +38,7 @@ readonly class FieldInConverterFilter implements FilterInputQueryToElasticConver
             $ESFieldName = $this->fieldNameResolver->resolve($criterion->field);
         }
 
-        if ($ESFieldName === FilterInputQueryToElasticConverterInterface::IGNORED_FIELD) {
+        if ($ESFieldName === FilterInputQueryToSearchQueryConverterInterface::IGNORED_FIELD) {
             return [];
         }
 

@@ -2,8 +2,8 @@
 
 namespace ATSearchBundle\Search\Converter\FilterQuery;
 
-use ATSearchBundle\Search\Converter\FilterInputQueryToElasticConverterInterface;
-use ATSearchBundle\Search\Converter\InputQueryToElasticFilter;
+use ATSearchBundle\Search\Converter\FilterInputQueryToSearchQueryConverterInterface;
+use ATSearchBundle\Search\Converter\InputQueryToSearchFilter;
 use ATSearchBundle\Search\Resolver\FieldNameResolver;
 use ATSearchBundle\Search\Resolver\FieldTypeResolver;
 use ATSearchBundle\Search\ValueObject\QueryDSL\RangeBetweenQuery;
@@ -14,14 +14,14 @@ use ATSearchBundle\Query\Operator;
 use InvalidArgumentException;
 use function count;
 
-readonly class FieldRangeBetweenConverterFilter implements FilterInputQueryToElasticConverterInterface
+readonly class FieldRangeBetweenConverterFilter implements FilterInputQueryToSearchQueryConverterInterface
 {
     public function __construct(
         private FieldNameResolver $fieldNameResolver, private FieldTypeResolver $fieldTypeResolver
     ) {
     }
 
-    public function convert(FilterQueryCriterion $criterion, InputQueryToElasticFilter $converter): array
+    public function convert(FilterQueryCriterion $criterion, InputQueryToSearchFilter $converter): array
     {
         if (!$criterion instanceof FieldFilter && !$criterion instanceof CustomFieldFilter) {
             throw new InvalidArgumentException('Unsupported criteria');

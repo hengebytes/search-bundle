@@ -2,8 +2,8 @@
 
 namespace ATSearchBundle\Search\Service;
 
-use ATSearchBundle\Search\Converter\InputQueryToElasticFilter;
-use ATSearchBundle\Search\Converter\InputQueryToElasticSort;
+use ATSearchBundle\Search\Converter\InputQueryToSearchFilter;
+use ATSearchBundle\Search\Converter\InputQueryToSearchSort;
 use ATSearchBundle\Search\Handler\SearchHandler;
 use ATSearchBundle\Search\ValueObject\Query;
 use ATSearchBundle\Exception\NoConverterException;
@@ -15,8 +15,8 @@ readonly class SearchService implements SearchServiceInterface
 {
     public function __construct(
         private SearchHandler $searchHandler,
-        private InputQueryToElasticFilter $queryToElasticFilter,
-        private InputQueryToElasticSort $queryToElasticSort,
+        private InputQueryToSearchFilter $queryToSearchFilter,
+        private InputQueryToSearchSort $queryToSearchSort,
         private DocumentGenerator $documentGenerator
     ) {
     }
@@ -35,9 +35,9 @@ readonly class SearchService implements SearchServiceInterface
         $query->withCount = $searchQuery->withCount;
 
         if ($searchQuery->filters) {
-            $query->filters = $this->queryToElasticFilter->convert($searchQuery->filters);
+            $query->filters = $this->queryToSearchFilter->convert($searchQuery->filters);
         }
-        $query->sort = $this->queryToElasticSort->convert($searchQuery->sorts);
+        $query->sort = $this->queryToSearchSort->convert($searchQuery->sorts);
 
         return $this->searchHandler->search($query);
     }

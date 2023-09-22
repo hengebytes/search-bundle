@@ -2,14 +2,14 @@
 
 namespace ATSearchBundle\Search\Converter\FilterQuery;
 
-use ATSearchBundle\Search\Converter\{FilterInputQueryToElasticConverterInterface, InputQueryToElasticFilter};
+use ATSearchBundle\Search\Converter\{FilterInputQueryToSearchQueryConverterInterface, InputQueryToSearchFilter};
 use ATSearchBundle\Search\ValueObject\QueryDSL\{BoolQuery, RawQuery};
 use ATSearchBundle\Query\Filter\LogicalAnd;
 use ATSearchBundle\Query\FilterQueryCriterion;
 
-readonly class LogicalAndConverterFilter implements FilterInputQueryToElasticConverterInterface
+readonly class LogicalAndConverterFilter implements FilterInputQueryToSearchQueryConverterInterface
 {
-    public function convert(FilterQueryCriterion $criterion, InputQueryToElasticFilter $converter): array
+    public function convert(FilterQueryCriterion $criterion, InputQueryToSearchFilter $converter): array
     {
         if (!$criterion instanceof LogicalAnd) {
             throw new \InvalidArgumentException('Unsupported criteria');

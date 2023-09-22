@@ -17,13 +17,13 @@ final readonly class RangeQuery implements QueryDSLInterface
         return [
             'range' => [
                 $this->field => [
-                    $this->toElasticSearchOperator($this->operator) => $this->value,
+                    $this->toElasticOpenSearchSearchOperator($this->operator) => $this->value,
                 ],
             ],
         ];
     }
 
-    private function toElasticSearchOperator(string $operator): string
+    private function toElasticOpenSearchSearchOperator(string $operator): string
     {
         return match ($operator) {
             Comparison::GT => 'gt',

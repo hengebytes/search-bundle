@@ -2,7 +2,7 @@
 
 namespace ATSearchBundle\Search\Generator;
 
-use ATSearchBundle\Search\Converter\FilterInputQueryToElasticConverterInterface;
+use ATSearchBundle\Search\Converter\FilterInputQueryToSearchQueryConverterInterface;
 use ATSearchBundle\Search\Mapper\SchemaMapper;
 use ATSearchBundle\Enum\FieldType;
 
@@ -25,7 +25,7 @@ readonly class DocumentFieldMetadata
             $fieldName .= '.' . $this->subFields;
         }
         if (!$this->type) {
-            return [$fieldName => FilterInputQueryToElasticConverterInterface::IGNORED_FIELD];
+            return [$fieldName => FilterInputQueryToSearchQueryConverterInterface::IGNORED_FIELD];
         }
 
         return [$fieldName => $this->storageFieldName . SchemaMapper::getSuffixByCustomType($this->type->value)];

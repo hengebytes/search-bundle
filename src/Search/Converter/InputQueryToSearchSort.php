@@ -6,9 +6,9 @@ use Symfony\Component\DependencyInjection\Attribute\TaggedIterator;
 use ATSearchBundle\Exception\NoConverterException;
 use ATSearchBundle\Query\SortQueryCriterion;
 
-class InputQueryToElasticSort
+class InputQueryToSearchSort
 {
-    /** @var SortInputQueryToElasticConverterInterface[] */
+    /** @var SortInputQueryToSearchQueryConverterInterface[] */
     private iterable $converters;
 
     public function __construct(#[TaggedIterator('at_search.search.query.sort_converter')] iterable $converters)
@@ -16,7 +16,7 @@ class InputQueryToElasticSort
         $this->converters = $converters;
     }
 
-    private function getConverter(SortQueryCriterion $sortClause): ?SortInputQueryToElasticConverterInterface
+    private function getConverter(SortQueryCriterion $sortClause): ?SortInputQueryToSearchQueryConverterInterface
     {
         foreach ($this->converters as $converter) {
             if ($converter->supports($sortClause)) {

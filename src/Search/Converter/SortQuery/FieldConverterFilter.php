@@ -2,20 +2,20 @@
 
 namespace ATSearchBundle\Search\Converter\SortQuery;
 
-use ATSearchBundle\Search\Converter\{InputQueryToElasticSort, SortInputQueryToElasticConverterInterface};
+use ATSearchBundle\Search\Converter\{InputQueryToSearchSort, SortInputQueryToSearchQueryConverterInterface};
 use ATSearchBundle\Search\Resolver\FieldNameResolver;
 use ATSearchBundle\Query\SortClause\SortByField;
 use ATSearchBundle\Query\SortQueryCriterion;
 use InvalidArgumentException;
 use RuntimeException;
 
-readonly class FieldConverterFilter implements SortInputQueryToElasticConverterInterface
+readonly class FieldConverterFilter implements SortInputQueryToSearchQueryConverterInterface
 {
     public function __construct(private FieldNameResolver $fieldNameResolver)
     {
     }
 
-    public function convert(SortQueryCriterion $sortClause, InputQueryToElasticSort $converter): array
+    public function convert(SortQueryCriterion $sortClause, InputQueryToSearchSort $converter): array
     {
         if (!$sortClause instanceof SortByField) {
             throw new InvalidArgumentException('Unsupported criteria');

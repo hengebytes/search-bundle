@@ -6,9 +6,9 @@ use Symfony\Component\DependencyInjection\Attribute\TaggedIterator;
 use ATSearchBundle\Exception\NoConverterException;
 use ATSearchBundle\Query\FilterQueryCriterion;
 
-class InputQueryToElasticFilter
+class InputQueryToSearchFilter
 {
-    /** @var FilterInputQueryToElasticConverterInterface[] */
+    /** @var FilterInputQueryToSearchQueryConverterInterface[] */
     private iterable $converters;
 
     public function __construct(#[TaggedIterator('at_search.search.query.filter_converter')] iterable $converters)
@@ -16,7 +16,7 @@ class InputQueryToElasticFilter
         $this->converters = $converters;
     }
 
-    private function getConverter(FilterQueryCriterion $criteria): ?FilterInputQueryToElasticConverterInterface
+    private function getConverter(FilterQueryCriterion $criteria): ?FilterInputQueryToSearchQueryConverterInterface
     {
         foreach ($this->converters as $converter) {
             if ($converter->supports($criteria)) {
