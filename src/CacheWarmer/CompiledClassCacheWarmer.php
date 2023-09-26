@@ -26,6 +26,6 @@ final readonly class CompiledClassCacheWarmer implements CacheWarmerInterface
 
     public function isOptional(): bool
     {
-        return true;
+        return false;
     }
 }

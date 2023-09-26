@@ -102,7 +102,7 @@ class IndexDocumentMetadataGenerator
                 continue;
             }
             $documentClassName = $className . 'IndexDocument';
-            $fileBuilder->save($outputDirectory . '/' . $documentClassName . '.php');
+            $fileBuilder->save($outputDirectory . '/' . $documentClassName . '.php', 511);
 
             $path = "$outputDirectory/$documentClassName.php";
             $classes["ATSearchBundle\\DocumentMetadata\\$documentClassName"] = $path;
