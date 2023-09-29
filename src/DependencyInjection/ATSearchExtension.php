@@ -2,6 +2,7 @@
 
 namespace ATSearchBundle\DependencyInjection;
 
+use ATSearchBundle\Search\EventListener\DoctrineEventListener;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
@@ -30,7 +31,12 @@ class ATSearchExtension extends Extension
             return;
         }
 
+        $this->loadSearchServicesFiles($container);
         $this->loadIndexDocumentGenerator($container, $config['search']['mappings']);
+
+        if (!$config['search']['enable_update_events']) {
+            $this->removeSearchIndexerListener($container);
+        }
     }
 
     private function loadConfigFiles(ContainerBuilder $container): void
@@ -62,6 +68,17 @@ class ATSearchExtension extends Extension
             $definition->setAutoconfigured(true);
             $definition->addTag('at_search.search.index_document', ['priority' => $priority]);
         }
+    }
+
+    private function loadSearchServicesFiles(ContainerBuilder $container): void
+    {
+        $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config/search'));
+        $loader->load('services.yaml');
+    }
+
+    private function removeSearchIndexerListener(ContainerBuilder $container): void
+    {
+        $container->removeDefinition(DoctrineEventListener::class);
     }
 
 }

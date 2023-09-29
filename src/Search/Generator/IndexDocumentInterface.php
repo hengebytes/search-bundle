@@ -11,4 +11,8 @@ interface IndexDocumentInterface
     public function getTenantId(object $entity): ?string;
 
     public function getFields(object $entity): array;
+
+    public function getESFieldName(string $fieldName): ?string;
+
+    public function getEntityId(object $entity): string|int|null;
 }

@@ -28,17 +28,17 @@ readonly class IndexManager
         $this->client->indices()->delete(['index' => $index]);
     }
 
-    public function index(int $id, string $entityName): void
+    public function index(int $id, string $className): void
     {
-        $document = $this->documentGenerator->generateDocument($id, $entityName);
+        $document = $this->documentGenerator->generateDocument($id, $className);
         $this->processSingleDocument($document);
     }
 
-    public function indexBulk(array $ids, string $entityName): void
+    public function indexBulk(array $ids, string $className): void
     {
         $params = ['body' => []];
         foreach ($ids as $key => $id) {
-            $document = $this->documentGenerator->generateDocument($id, $entityName);
+            $document = $this->documentGenerator->generateDocument($id, $className);
 
             $params = $this->handleDocument($document, $params, $key);
         }

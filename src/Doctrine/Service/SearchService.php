@@ -2,18 +2,18 @@
 
 namespace ATSearchBundle\Doctrine\Service;
 
-use Doctrine\ORM\EntityManagerInterface;
-use Doctrine\ORM\NonUniqueResultException;
-use Doctrine\ORM\NoResultException;
-use ATSearchBundle\Doctrine\QueryToRepositoryQuery;
+use ATSearchBundle\Doctrine\Converter\QueryToRepositoryQuery;
 use ATSearchBundle\Query\SearchQuery;
 use ATSearchBundle\Service\SearchServiceInterface;
 use ATSearchBundle\ValueObject\Result;
+use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
 
 readonly class SearchService implements SearchServiceInterface
 {
     public function __construct(
-        private QueryToRepositoryQuery $queryMapper, private EntityManagerInterface $em
+        private QueryToRepositoryQuery $queryConverter, private EntityManagerInterface $em
     ) {
     }
 
@@ -24,7 +24,7 @@ readonly class SearchService implements SearchServiceInterface
         $qb = $repo->createQueryBuilder($this->getAlias($searchQuery->targetEntity));
 
         if ($searchQuery->limit === 0) {
-            $doctrineQuery = $this->queryMapper->getDoctrineQueryForCount($searchQuery, $qb);
+            $doctrineQuery = $this->queryConverter->getDoctrineQueryForCount($searchQuery, $qb);
             try {
                 $totalCount = (int)$doctrineQuery->getSingleScalarResult();
             } catch (NonUniqueResultException|NoResultException) {
@@ -34,7 +34,7 @@ readonly class SearchService implements SearchServiceInterface
             return new Result($totalCount, []);
         }
 
-        $doctrineQuery = $this->queryMapper->getDoctrineQuery($searchQuery, $qb);
+        $doctrineQuery = $this->queryConverter->getDoctrineQuery($searchQuery, $qb);
         $result = $doctrineQuery->getResult();
 
         if ($searchQuery->withCount) {

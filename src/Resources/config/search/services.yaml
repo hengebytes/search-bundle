@@ -1,0 +1,28 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    ATSearchBundle\Search\Converter\:
+        resource: '../../../Search/Converter/'
+
+    ATSearchBundle\Search\Generator\:
+        resource: '../../../Search/Generator/'
+
+    ATSearchBundle\Search\Resolver\:
+        resource: '../../../Search/Resolver/'
+
+    ATSearchBundle\Search\Service\:
+        resource: '../../../Search/Service/'
+
+    ATSearchBundle\Search\Handler\:
+        resource: '../../../Search/Handler/'
+
+    ATSearchBundle\Search\EventSubscriber\:
+        resource: '../../../Search/EventSubscriber/'
+
+    ATSearchBundle\Search\EventListener\:
+        resource: '../../../Search/EventListener/'
+
+    ATSearchBundle\Search\Provider\:
+        resource: '../../../Search/Provider/'

@@ -1,19 +1,33 @@
 <?php
 
-namespace ATSearchBundle\Search\Resolver;
+namespace ATSearchBundle\Search\Provider;
 
 use ATSearchBundle\Search\Generator\IndexDocumentInterface;
 use Symfony\Component\DependencyInjection\Attribute\TaggedIterator;
 
-readonly class DocumentResolver
+final readonly class IndexDocumentProvider
 {
     /**
-     * @param iterable|IndexDocumentInterface[] $indexDocuments
+     * @param iterable<IndexDocumentInterface> $indexDocuments
      */
     public function __construct(
         #[TaggedIterator('at_search.search.index_document')]
         private iterable $indexDocuments,
     ) {
+    }
+
+    public function getIndexDocument(string $entityClass): ?IndexDocumentInterface
+    {
+        foreach ($this->indexDocuments as $indexDocument) {
+            if (
+                $indexDocument->getEntityClassName() !== $entityClass
+                && !is_subclass_of($entityClass, $indexDocument->getEntityClassName())
+            ) {
+                continue;
+            }
+            return $indexDocument;
+        }
+        return null;
     }
 
 

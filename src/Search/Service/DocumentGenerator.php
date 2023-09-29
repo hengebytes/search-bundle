@@ -2,32 +2,25 @@
 
 namespace ATSearchBundle\Search\Service;
 
-use ATSearchBundle\Search\Generator\IndexDocumentInterface;
+use ATSearchBundle\Search\Event\IndexDocumentCreatedEvent;
+use ATSearchBundle\Search\Provider\IndexDocumentProvider;
 use ATSearchBundle\Search\ValueObject\Document;
-use ATSearchBundle\Event\IndexDocumentCreatedEvent;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Component\DependencyInjection\Attribute\TaggedIterator;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 
 readonly class DocumentGenerator
 {
-    /**
-     * @param iterable|IndexDocumentInterface[] $indexDocuments
-     * @param EntityManagerInterface $em
-     * @param EventDispatcherInterface $eventDispatcher
-     */
     public function __construct(
-        #[TaggedIterator('at_search.search.index_document')]
-        private iterable $indexDocuments,
+        private IndexDocumentProvider $indexDocumentProvider,
         private EntityManagerInterface $em,
         private EventDispatcherInterface $eventDispatcher
     ) {
     }
 
-    public function generateDocument(int $id, string $entityName): Document
+    public function generateDocument(int $id, string $className): Document
     {
-        $entity = $this->em->getRepository($entityName)->find($id);
-        $document = new Document($id, $this->getIndexName($entityName));
+        $entity = $this->em->getRepository($className)->find($id);
+        $document = new Document($id, $this->getIndexName($className));
 
         if (!$entity) {
             $document->tenantId = '*';
@@ -49,46 +42,32 @@ readonly class DocumentGenerator
 
     private function getBody(object $entity): array
     {
-        $fields = [[]];
-        foreach ($this->indexDocuments as $document) {
-            if (
-                $document->getEntityClassName() !== $entity::class
-                && !is_subclass_of($entity, $document->getEntityClassName())
-            ) {
-                continue;
-            }
-            $fields[] = $document->getFields($entity);
+        $indexDocument = $this->indexDocumentProvider->getIndexDocument($entity::class);
+        if (!$indexDocument) {
+            return [];
         }
 
-        return array_merge(...$fields);
+        return $indexDocument->getFields($entity);
     }
 
-    public function getIndexName(string $targetEntity): string
+    public function getIndexName(string $entityClass): string
     {
-        foreach ($this->indexDocuments as $indexDocument) {
-            if (
-                $indexDocument->getEntityClassName() === $targetEntity
-                || is_subclass_of($targetEntity, $indexDocument->getEntityClassName())
-            ) {
-                return $indexDocument->getIndexName();
-            }
+        $indexDocument = $this->indexDocumentProvider->getIndexDocument($entityClass);
+        if (!$indexDocument) {
+            return 'default';
         }
 
-        return 'default';
+        return $indexDocument->getIndexName();
     }
 
     private function getTenantId(object $entity): string
     {
-        foreach ($this->indexDocuments as $indexDocument) {
-            if (
-                $indexDocument->getEntityClassName() === $entity::class
-                || is_subclass_of($entity, $indexDocument->getEntityClassName())
-            ) {
-                return $indexDocument->getTenantId($entity) ?? Document::DEFAULT_TENANT_ID;
-            }
+        $indexDocument = $this->indexDocumentProvider->getIndexDocument($entity::class);
+        if (!$indexDocument) {
+            return Document::DEFAULT_TENANT_ID;
         }
 
-        return Document::DEFAULT_TENANT_ID;
+        return $indexDocument->getTenantId($entity) ?? Document::DEFAULT_TENANT_ID;
     }
 
 }

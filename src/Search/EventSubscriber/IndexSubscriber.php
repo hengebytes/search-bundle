@@ -1,9 +1,9 @@
 <?php
 
-namespace ATSearchBundle\EventSubscriber;
+namespace ATSearchBundle\Search\EventSubscriber;
 
+use ATSearchBundle\Search\Event\IndexDocumentCreatedEvent;
 use ATSearchBundle\Search\Generator\IndexExtractor;
-use ATSearchBundle\Event\IndexDocumentCreatedEvent;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 readonly class IndexSubscriber implements EventSubscriberInterface

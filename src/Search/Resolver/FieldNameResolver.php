@@ -2,9 +2,11 @@
 
 namespace ATSearchBundle\Search\Resolver;
 
+use ATSearchBundle\Search\Provider\IndexDocumentProvider;
+
 readonly class FieldNameResolver
 {
-    public function __construct(private DocumentResolver $documentResolver)
+    public function __construct(private IndexDocumentProvider $documentResolver)
     {
     }
 

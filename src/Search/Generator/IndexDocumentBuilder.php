@@ -13,6 +13,7 @@ use ATSearchBundle\Annotation\FieldMultiBool;
 use ATSearchBundle\Annotation\FieldMultiInt;
 use ATSearchBundle\Annotation\FieldMultiString;
 use ATSearchBundle\Annotation\FieldString;
+use ATSearchBundle\Annotation\TenantId;
 use ATSearchBundle\Search\ValueObject\Document;
 use ATSearchBundle\Enum\FieldType;
 use Murtukov\PHPCodeGenerator\Modifier;
@@ -31,20 +32,17 @@ class IndexDocumentBuilder
         $indexName = '';
         $reflectionClass = new ReflectionClass($namespace . '\\' . $className);
         $attributes = $reflectionClass->getAttributes();
-        $hasIndexAttribute = $hasIdAttribute = false;
+        $hasIndexAttribute = false;
         foreach ($attributes as $attribute) {
             $hasIndexAttribute = $attribute->getName() === Index::class;
             if ($hasIndexAttribute) {
                 $indexName = $attribute->getArguments()['name'] ?? $this->toSnakeCase($className);
+                break;
             }
-            $hasIdAttribute = $attribute->getName() === FieldId::class;
         }
 
         if (!$hasIndexAttribute) {
             return null;
-        }
-        if (!$hasIdAttribute) {
-            throw new \RuntimeException("Class $className must have FieldId attribute");
         }
 
         $fields = [];
@@ -53,6 +51,7 @@ class IndexDocumentBuilder
         $documentClassName = $className . 'IndexDocument';
 
         $tenantIdFunc = Document::DEFAULT_TENANT_ID;
+        $idFunc = null;
         $properties = $reflectionClass->getProperties();
         foreach ($properties as $property) {
             $attributes = $property->getAttributes();
@@ -60,6 +59,10 @@ class IndexDocumentBuilder
                 $resolvedTenantIdFunc = $this->getTenantIdFunc($attribute, $property);
                 if ($resolvedTenantIdFunc) {
                     $tenantIdFunc = $resolvedTenantIdFunc;
+                }
+                $resolvedIdFunc = $this->getEntityIdFunc($attribute, $property);
+                if ($resolvedIdFunc) {
+                    $idFunc = $resolvedIdFunc;
                 }
                 $fieldMetadata = $this->getFieldMetadata($attribute, $property);
                 if (!$fieldMetadata) {
@@ -82,6 +85,10 @@ class IndexDocumentBuilder
                 if ($resolvedTenantIdFunc) {
                     $tenantIdFunc = $resolvedTenantIdFunc;
                 }
+                $resolvedIdFunc = $this->getEntityIdFunc($attribute, $method);
+                if ($resolvedIdFunc) {
+                    $idFunc = $resolvedIdFunc;
+                }
                 $fieldMetadata = $this->getFieldMetadata($attribute, $method);
                 if (!$fieldMetadata) {
                     continue;
@@ -93,6 +100,10 @@ class IndexDocumentBuilder
                 $fieldMap[] = $fieldMetadata->getFieldNamesForMap();
                 $hasMultiField = $hasMultiField || $fieldMetadata->isMulti();
             }
+        }
+
+        if (!$idFunc) {
+            throw new \RuntimeException("Entity $className has no id field");
         }
 
         $fileBuilder = PhpFile::new()->setNamespace('ATSearchBundle\\DocumentMetadata');
@@ -121,6 +132,12 @@ class IndexDocumentBuilder
             ->setDocBlock('{@inheritdoc}')
             ->addArgument('entity', 'object')
             ->append("return $tenantIdFunc");
+
+        $class->createMethod('getEntityId')
+            ->setReturnType('string|int|null')
+            ->setDocBlock('{@inheritdoc}')
+            ->addArgument('entity', 'object')
+            ->append("return $idFunc");
 
         $class->createMethod('getFields')
             ->setReturnType('array')
@@ -151,10 +168,18 @@ class IndexDocumentBuilder
         return $indexPriority;
     }
 
-
     private function getTenantIdFunc(ReflectionAttribute $attribute, ReflectionProperty|ReflectionMethod $property): ?string
     {
-        if ($attribute->getName() !== 'ATSearchBundle\Annotation\TenantId') {
+        if ($attribute->getName() !== TenantId::class) {
+            return null;
+        }
+
+        return $this->getEntityPropertyValue($attribute, $property);
+    }
+
+    private function getEntityIdFunc(ReflectionAttribute $attribute, ReflectionProperty|ReflectionMethod $property): ?string
+    {
+        if ($attribute->getName() !== FieldId::class) {
             return null;
         }
 

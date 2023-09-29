@@ -3,6 +3,7 @@
 
 namespace ATSearchBundle\Command;
 
+use ATSearchBundle\Search\Provider\IndexDocumentProvider;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Console\{Attribute\AsCommand,
     Command\Command,
@@ -10,7 +11,6 @@ use Symfony\Component\Console\{Attribute\AsCommand,
     Input\InputInterface,
     Output\OutputInterface
 };
-use ATSearchBundle\Search\Resolver\DocumentResolver;
 use ATSearchBundle\Search\Service\IndexManager;
 
 #[AsCommand(name: 'at_search:reindex')]
@@ -19,7 +19,7 @@ class ReindexCommand extends Command
     public function __construct(
         private readonly IndexManager $indexManager,
         private readonly EntityManagerInterface $em,
-        private readonly DocumentResolver $documentResolver,
+        private readonly IndexDocumentProvider $indexDocumentProvider,
     ) {
         parent::__construct();
     }
@@ -63,7 +63,7 @@ class ReindexCommand extends Command
             return Command::FAILURE;
         }
 
-        $entityClass = $this->documentResolver->getEntityClassNameByIndex($contentType);
+        $entityClass = $this->indexDocumentProvider->getEntityClassNameByIndex($contentType);
         if ($contentType !== 'all' && !$entityClass) {
             $output->writeln('Valid content type is required');
 
@@ -81,7 +81,7 @@ class ReindexCommand extends Command
         }
 
         if ($contentType === 'all') {
-            foreach ($this->documentResolver->getAvailableEntityClasses() as $availableEntityClass) {
+            foreach ($this->indexDocumentProvider->getAvailableEntityClasses() as $availableEntityClass) {
                 $this->reindex($availableEntityClass);
             }
         } else {

@@ -26,7 +26,7 @@ doctrine:
 #### Configure bundle in your config/packages/at_search.yaml file
 ```yaml
 at_search:
-    elastic:
+    search:
         enabled: true
         mappings:
             App:
@@ -84,4 +84,12 @@ class User
     #[ATSearch\FieldMultiString(subFields: 'email')]
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Email::class)]
     public Collection $emails;
+```
+
+#### To enable default reindex based on Doctrine events add the following to your config/packages/at_search.yaml file
+
+```yaml
+at_search:
+    search:
+        enable_update_events: true # default false
 ```

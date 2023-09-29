@@ -3,6 +3,17 @@ services:
         autowire: true
         autoconfigure: true
 
-    ATSearchBundle\:
-        resource: '../../'
-        exclude: '../../{Annotation,DependencyInjection,Resources,Query,Exception,Enum,Search/ValueObject}'
+    ATSearchBundle\CacheWarmer\:
+        resource: '../../CacheWarmer/'
+
+    ATSearchBundle\Command\:
+        resource: '../../Command/'
+
+    ATSearchBundle\Doctrine\Converter\:
+        resource: '../../Doctrine/Converter/'
+
+    ATSearchBundle\Doctrine\Service\:
+        resource: '../../Doctrine/Service/'
+
+    ATSearchBundle\Service\:
+        resource: '../../Service/'
