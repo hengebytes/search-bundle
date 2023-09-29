@@ -4,6 +4,7 @@ namespace ATSearchBundle\Search\Generator;
 
 use ATSearchBundle\Annotation\FieldBool;
 use ATSearchBundle\Annotation\FieldDateTime;
+use ATSearchBundle\Annotation\FieldFloat;
 use ATSearchBundle\Annotation\FieldId;
 use ATSearchBundle\Annotation\FieldIgnored;
 use ATSearchBundle\Annotation\Index;
@@ -30,18 +31,22 @@ class IndexDocumentBuilder
         $indexName = '';
         $reflectionClass = new ReflectionClass($namespace . '\\' . $className);
         $attributes = $reflectionClass->getAttributes();
-        $hasIndexAttribute = false;
+        $hasIndexAttribute = $hasIdAttribute = false;
         foreach ($attributes as $attribute) {
             $hasIndexAttribute = $attribute->getName() === Index::class;
             if ($hasIndexAttribute) {
                 $indexName = $attribute->getArguments()['name'] ?? $this->toSnakeCase($className);
-                break;
             }
+            $hasIdAttribute = $attribute->getName() === FieldId::class;
         }
 
         if (!$hasIndexAttribute) {
             return null;
         }
+        if (!$hasIdAttribute) {
+            throw new \RuntimeException("Class $className must have FieldId attribute");
+        }
+
         $fields = [];
         $fieldMap = [[]];
         $hasMultiField = true;
@@ -167,6 +172,7 @@ class IndexDocumentBuilder
             FieldInt::class => FieldType::INTEGER,
             FieldBool::class => FieldType::BOOLEAN,
             FieldMultiBool::class => FieldType::MULTI_BOOLEAN,
+            FieldFloat::class => FieldType::FLOAT,
             FieldIgnored::class => 'ignored',
             default => null,
         };
