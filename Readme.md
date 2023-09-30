@@ -71,13 +71,13 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Entity]
 class User
 {
-    #[ATSearch\Id]
+    #[ATSearch\FieldId]
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     public ?int $id = null;
 
-    #[ATSearch\String]
+    #[ATSearch\FieldString]
     #[ORM\Column(length: 128)]
     public ?string $firstName = null;
 
