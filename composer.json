@@ -27,7 +27,8 @@
         "symfony/orm-pack": "^2.0"
     },
     "suggest": {
-        "opensearch-project/opensearch-php": "For integration with opensearch search engine"
+        "opensearch-project/opensearch-php": "For integration with opensearch search engine",
+        "elasticsearch/elasticsearch": "For integration with elasticsearch search engine"
     },
     "autoload": {
         "psr-4": {
