@@ -2,14 +2,18 @@
 
 namespace ATSearchBundle\DependencyInjection;
 
+use ATSearchBundle\Command\PutIndexTemplateCommand;
 use ATSearchBundle\Search\EventListener\DoctrineEventListener;
+use ATSearchBundle\Search\Generator\IndexDocumentBuilder;
+use ATSearchBundle\Search\Generator\IndexDocumentMetadataGenerator;
+use ATSearchBundle\Search\Handler\SearchHandler;
+use ATSearchBundle\Search\Service\IndexManager;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
+use Symfony\Component\DependencyInjection\Reference;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
-use ATSearchBundle\Search\Generator\IndexDocumentBuilder;
-use ATSearchBundle\Search\Generator\IndexDocumentMetadataGenerator;
 
 class ATSearchExtension extends Extension
 {
@@ -37,6 +41,7 @@ class ATSearchExtension extends Extension
         if (!$config['search']['enable_update_events']) {
             $this->removeSearchIndexerListener($container);
         }
+        $this->setClient($container, $config['search']['client']);
     }
 
     private function loadConfigFiles(ContainerBuilder $container): void
@@ -79,6 +84,14 @@ class ATSearchExtension extends Extension
     private function removeSearchIndexerListener(ContainerBuilder $container): void
     {
         $container->removeDefinition(DoctrineEventListener::class);
+    }
+
+    private function setClient(ContainerBuilder $container, string $client): void
+    {
+        $clientReference = new Reference($client);
+        $container->getDefinition(SearchHandler::class)->setArgument(0, $clientReference);
+        $container->getDefinition(IndexManager::class)->setArgument(0, $clientReference);
+        $container->getDefinition(PutIndexTemplateCommand::class)->setArgument(0, $clientReference);
     }
 
 }

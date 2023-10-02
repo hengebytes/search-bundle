@@ -28,6 +28,7 @@ doctrine:
 at_search:
     search:
         enabled: true
+        client: OpenSearch\Client # OpenSearch\Client or Elasticsearch\Client
         mappings:
             App:
                 namespace: App\Entity
@@ -36,7 +37,7 @@ at_search:
 
 ```
 
-#### To enable OpenSearch Client add the following to your config/services.yaml file
+#### To create OpenSearch Client add the following to your config/services.yaml file
 
 ```yaml
 
@@ -47,7 +48,7 @@ at_search:
                 hosts: ['%env(OPENSEARCH_URL)%']
 ```
 
-#### ~~To enable ElasticSearch Client add the following to your config/services.yaml file~~ NOT SUPPORTED YET
+#### To create ElasticSearch Client add the following to your config/services.yaml file
 ```yaml
 
     Elasticsearch\Client:

@@ -2,15 +2,19 @@
 
 namespace ATSearchBundle\Search\Handler;
 
-use OpenSearch\Client;
-use OpenSearch\Common\Exceptions\{ClientErrorResponseException, ServerErrorResponseException};
 use ATSearchBundle\Search\ValueObject\Document;
 use ATSearchBundle\Search\ValueObject\Query;
 use ATSearchBundle\ValueObject\Result;
+use Elastic\Elasticsearch\Client as ElasticClient;
+use Elastic\Elasticsearch\Exception\ClientResponseException;
+use Elastic\Elasticsearch\Exception\ServerResponseException;
+use OpenSearch\Client as OpenSearchClient;
+use OpenSearch\Common\Exceptions\ClientErrorResponseException;
+use OpenSearch\Common\Exceptions\ServerErrorResponseException;
 
 readonly class SearchHandler
 {
-    public function __construct(private Client $searchClient)
+    public function __construct(private OpenSearchClient|ElasticClient $searchClient)
     {
     }
 
@@ -50,7 +54,7 @@ readonly class SearchHandler
             if ($query->returnSource) {
                 $data = array_map(static fn($hit) => $hit['_source'], $ESResponse['hits']['hits']);
             }
-        } catch (ClientErrorResponseException|ServerErrorResponseException) {
+        } catch (ClientErrorResponseException|ServerErrorResponseException|ClientResponseException|ServerResponseException) {
         }
 
         return new Result(

@@ -18,6 +18,7 @@ class Configuration implements ConfigurationInterface
                 ->arrayNode('search')
                     ->children()
                         ->booleanNode('enabled')->defaultFalse()->end()
+                        ->scalarNode('client')->end()
                         ->booleanNode('enable_update_events')->defaultFalse()->end()
                         ->arrayNode('mappings')
                         ->useAttributeAsKey('name')

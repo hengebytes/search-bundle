@@ -4,7 +4,8 @@
 namespace ATSearchBundle\Command;
 
 use Exception;
-use OpenSearch\Client;
+use OpenSearch\Client as OpenSearchClient;
+use Elastic\Elasticsearch\Client as ElasticClient;
 use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
@@ -16,7 +17,7 @@ use ATSearchBundle\Search\ValueObject\Document;
 #[AsCommand(name: 'at_search:elastic:put_index_template')]
 class PutIndexTemplateCommand extends Command
 {
-    public function __construct(private readonly Client $client)
+    public function __construct(private readonly OpenSearchClient|ElasticClient $client)
     {
         parent::__construct();
     }

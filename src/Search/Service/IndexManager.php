@@ -2,12 +2,13 @@
 
 namespace ATSearchBundle\Search\Service;
 
-use OpenSearch\Client;
+use OpenSearch\Client as OpenSearchClient;
+use Elastic\Elasticsearch\Client as ElasticClient;
 use ATSearchBundle\Search\ValueObject\Document;
 
 readonly class IndexManager
 {
-    public function __construct(private Client $client, private DocumentGenerator $documentGenerator)
+    public function __construct(private OpenSearchClient|ElasticClient $client, private DocumentGenerator $documentGenerator)
     {
     }
 
