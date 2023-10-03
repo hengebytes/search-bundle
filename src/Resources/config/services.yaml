@@ -10,6 +10,8 @@ services:
         resource: '../../Command/'
 
     ATSearchBundle\Doctrine\Converter\:
+        bind:
+            $defaultLocale: '%kernel.default_locale%'
         resource: '../../Doctrine/Converter/'
 
     ATSearchBundle\Doctrine\Service\:

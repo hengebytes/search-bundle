@@ -15,8 +15,10 @@ class QueryToRepositoryQuery implements LocaleAwareInterface
 {
     private string $locale;
 
-    public function __construct(private readonly InputQueryToDoctrineQueryFilters $inputQueryToDoctrineFilter)
-    {
+    public function __construct(
+        private readonly InputQueryToDoctrineQueryFilters $inputQueryToDoctrineFilter,
+        private readonly string $defaultLocale
+    ) {
     }
 
     public function getDoctrineQuery(SearchQuery $query, QueryBuilder $queryBuilder): Query
@@ -37,9 +39,16 @@ class QueryToRepositoryQuery implements LocaleAwareInterface
         $queryBuilder->setMaxResults($query->limit);
         $queryBuilder->setFirstResult($query->offset);
 
+        foreach ($query->subSelects as $subSelect) {
+            if (!isset($joinTables[$subSelect])) {
+                $joinTables[$subSelect] = $alias;
+            }
+            $queryBuilder->addSelect($subSelect);
+        }
+
         $this->joinTables($joinTables, $queryBuilder);
 
-        $queryBuilder->groupBy($alias . '.id');
+        $queryBuilder->groupBy($alias . '.' . $query->idField);
 
         return $queryBuilder->getQuery();
     }
@@ -47,7 +56,7 @@ class QueryToRepositoryQuery implements LocaleAwareInterface
     public function getDoctrineQueryForCount(SearchQuery $query, QueryBuilder $queryBuilder): Query
     {
         $alias = $queryBuilder->getRootAliases()[0] ?? 'unknown';
-        $queryBuilder->select('COUNT(DISTINCT(' . $alias . '.id))');
+        $queryBuilder->select('COUNT(DISTINCT(' . $alias . '.' . $query->idField . '))');
 
         $joinAwareQB = new JoinAwareQueryBuilder($queryBuilder, [], $alias);
 
@@ -65,6 +74,10 @@ class QueryToRepositoryQuery implements LocaleAwareInterface
 
     private function addSorts(SearchQuery $query, QueryBuilder $qb, array &$joinTables, string $alias): void
     {
+        $translationKey = array_search('translations', $query->subSelects, true);
+        unset($query->subSelects[$translationKey]);
+        $selectTranslations = $translationKey !== false;
+        $translationsSelected = false;
         foreach ($query->sorts as $sort) {
             if ($sort instanceof SortByField) {
                 $qb->addOrderBy($alias . '.' . $sort->field, $sort->direction);
@@ -75,21 +88,25 @@ class QueryToRepositoryQuery implements LocaleAwareInterface
                     $joinTables[$sort->relationField] = $alias;
                     continue;
                 }
-                if ($this->locale === 'en') {
+                if ($this->locale === $this->defaultLocale) {
                     $joinTables[$sort->relationField] = $alias;
                     $qb->andWhere('translations.locale = :trans_locale');
                     $qb->setParameter('trans_locale', $this->locale);
                     $qb->addOrderBy('translations.' . $sort->field, $sort->direction);
+                    if ($selectTranslations && !$translationsSelected) {
+                        $qb->addSelect('translations');
+                        $translationsSelected = true;
+                    }
                     continue;
                 }
 
-                // handle non english locales with fallback to english
-                $aliasLocaleFallback = 'translations_sort_en.locale';
+                // handle non default locales with fallback to default
+                $aliasLocaleFallback = 'translations_sort_default.locale';
                 $aliasLocale = 'translations_sort.locale';
                 $qb->leftJoin(
                     $alias . '.translations',
-                    'translations_sort_en',
-                    Join::WITH, $aliasLocaleFallback . ' = :en_locale'
+                    'translations_sort_default',
+                    Join::WITH, $aliasLocaleFallback . ' = :default_locale'
                 );
 
                 $qb->leftJoin(
@@ -99,20 +116,24 @@ class QueryToRepositoryQuery implements LocaleAwareInterface
                 );
 
                 $aliasField = 'translations_sort.' . $sort->field;
-                $aliasFieldFallback = 'translations_sort_en.' . $sort->field;
+                $aliasFieldFallback = 'translations_sort_default.' . $sort->field;
                 $qb->andWhere(
                     $qb->expr()->orX(
                         $qb->expr()->andX($aliasLocale . ' = :locale', $aliasField . ' IS NOT NULL'),
                         $qb->expr()->andX(
-                            $aliasLocaleFallback . ' = :en_locale',
+                            $aliasLocaleFallback . ' = :default_locale',
                             $aliasFieldFallback . ' IS NOT NULL',
                             $aliasField . ' IS NULL',
                         )
                     )
                 )
                     ->setParameter('locale', $this->locale)
-                    ->setParameter('en_locale', 'en')
+                    ->setParameter('default_locale', $this->defaultLocale)
                     ->addOrderBy('IFNULL(' . $aliasField . ', ' . $aliasFieldFallback . ')', $sort->direction);
+                if ($selectTranslations) {
+                    $qb->addSelect('translations_sort');
+                    $qb->addSelect('translations_sort_default');
+                }
             }
         }
     }

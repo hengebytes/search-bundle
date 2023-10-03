@@ -39,6 +39,10 @@ readonly class SearchService implements SearchServiceInterface
         }
         $query->sort = $this->queryToSearchSort->convert($searchQuery->sorts);
 
+        if ($searchQuery->subSelects) {
+            $query->sourceIncludes = $searchQuery->subSelects;
+        }
+
         return $this->searchHandler->search($query);
     }
 }

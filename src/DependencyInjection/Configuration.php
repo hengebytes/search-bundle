@@ -14,7 +14,6 @@ class Configuration implements ConfigurationInterface
         $rootNode = $treeBuilder->getRootNode();
         $rootNode
             ->children()
-
                 ->arrayNode('search')
                     ->children()
                         ->booleanNode('enabled')->defaultFalse()->end()

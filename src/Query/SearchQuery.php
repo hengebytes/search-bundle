@@ -18,7 +18,23 @@ class SearchQuery
     public int $offset = 0;
     public SearchSourceEnum $searchSource = SearchSourceEnum::DOCTRINE;
     public ?Result $result = null;
+    /**
+     * Whether to include count of total results in the result (count function in Doctrine)
+     * @var bool
+     */
     public bool $withCount = true;
+    /**
+     * Doctrine entity ID field name
+     * Used for group by in searches
+     * @var string
+     */
+    public string $idField = 'id';
+    /**
+     * Additional selects to be added to the query for Doctrine
+     * Fields to be retrieved from Search engine
+     * @var array
+     */
+    public array $subSelects = [];
 
     public function __construct(public string $targetEntity, public int $tenantId = 0)
     {
