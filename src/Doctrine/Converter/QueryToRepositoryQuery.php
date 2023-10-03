@@ -75,8 +75,10 @@ class QueryToRepositoryQuery implements LocaleAwareInterface
     private function addSorts(SearchQuery $query, QueryBuilder $qb, array &$joinTables, string $alias): void
     {
         $translationKey = array_search('translations', $query->subSelects, true);
-        unset($query->subSelects[$translationKey]);
         $selectTranslations = $translationKey !== false;
+        if ($selectTranslations) {
+            unset($query->subSelects[$translationKey]);
+        }
         $translationsSelected = false;
         foreach ($query->sorts as $sort) {
             if ($sort instanceof SortByField) {
