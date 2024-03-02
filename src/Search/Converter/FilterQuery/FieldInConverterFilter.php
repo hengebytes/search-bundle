@@ -2,16 +2,17 @@
 
 namespace ATSearchBundle\Search\Converter\FilterQuery;
 
-use ATSearchBundle\Search\Converter\FilterInputQueryToSearchQueryConverterInterface;
-use ATSearchBundle\Search\Converter\InputQueryToSearchFilter;
-use ATSearchBundle\Search\Resolver\FieldNameResolver;
-use ATSearchBundle\Search\Resolver\FieldTypeResolver;
-use ATSearchBundle\Search\ValueObject\QueryDSL\{TermQuery, TermsQuery};
+use ATSearchBundle\Exception\CriterionFieldNotIndexedException;
 use ATSearchBundle\Query\Filter\CustomFieldFilter;
 use ATSearchBundle\Query\Filter\FieldFilter;
 use ATSearchBundle\Query\Filter\RelationFieldFilter;
 use ATSearchBundle\Query\FilterQueryCriterion;
 use ATSearchBundle\Query\Operator;
+use ATSearchBundle\Search\Converter\FilterInputQueryToSearchQueryConverterInterface;
+use ATSearchBundle\Search\Converter\InputQueryToSearchFilter;
+use ATSearchBundle\Search\Resolver\FieldNameResolver;
+use ATSearchBundle\Search\Resolver\FieldTypeResolver;
+use ATSearchBundle\Search\ValueObject\QueryDSL\{TermQuery, TermsQuery};
 use InvalidArgumentException;
 use function is_array;
 
@@ -43,7 +44,7 @@ readonly class FieldInConverterFilter implements FilterInputQueryToSearchQueryCo
         }
 
         if (!$ESFieldName) {
-            throw new InvalidArgumentException('Unsupported criteria. Field is not indexed.');
+            throw new CriterionFieldNotIndexedException($criterion);
         }
 
         $value = $this->fieldTypeResolver->resolveValueByFieldName($ESFieldName, $criterion->value);
@@ -59,7 +60,8 @@ readonly class FieldInConverterFilter implements FilterInputQueryToSearchQueryCo
 
     public function supports(FilterQueryCriterion $criteria): bool
     {
-        return ($criteria instanceof FieldFilter
+        return (
+                $criteria instanceof FieldFilter
                 || $criteria instanceof CustomFieldFilter
                 || $criteria instanceof RelationFieldFilter
             )

@@ -2,6 +2,7 @@
 
 namespace ATSearchBundle\Search\Converter\FilterQuery;
 
+use ATSearchBundle\Exception\CriterionFieldNotIndexedException;
 use ATSearchBundle\Search\Converter\FilterInputQueryToSearchQueryConverterInterface;
 use ATSearchBundle\Search\Converter\InputQueryToSearchFilter;
 use ATSearchBundle\Search\Resolver\FieldNameResolver;
@@ -34,7 +35,7 @@ readonly class FieldRangeConverterFilter implements FilterInputQueryToSearchQuer
         }
 
         if (!$ESFieldName) {
-            throw new InvalidArgumentException('Unsupported criteria. Field is not indexed.');
+            throw new CriterionFieldNotIndexedException($criterion);
         }
         $value = $this->fieldTypeResolver->resolveValueByFieldName($ESFieldName, $criterion->value);
 
