@@ -46,7 +46,6 @@ class ReindexCommand extends Command
                 'c',
                 InputArgument::OPTIONAL,
                 'Type of content for reindex.',
-                null
             );
     }
 

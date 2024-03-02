@@ -27,7 +27,6 @@ readonly class FieldRangeConverterFilter implements FilterInputQueryToSearchQuer
         if (!$criterion instanceof FieldFilter && !$criterion instanceof CustomFieldFilter) {
             throw new InvalidArgumentException('Unsupported criteria');
         }
-
         if ($criterion instanceof CustomFieldFilter) {
             $ESFieldName = $criterion->field;
         } else {

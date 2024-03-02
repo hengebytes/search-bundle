@@ -7,15 +7,16 @@ use ATSearchBundle\Annotation\FieldDateTime;
 use ATSearchBundle\Annotation\FieldFloat;
 use ATSearchBundle\Annotation\FieldId;
 use ATSearchBundle\Annotation\FieldIgnored;
-use ATSearchBundle\Annotation\Index;
 use ATSearchBundle\Annotation\FieldInt;
 use ATSearchBundle\Annotation\FieldMultiBool;
 use ATSearchBundle\Annotation\FieldMultiInt;
 use ATSearchBundle\Annotation\FieldMultiString;
 use ATSearchBundle\Annotation\FieldString;
+use ATSearchBundle\Annotation\Index;
 use ATSearchBundle\Annotation\TenantId;
-use ATSearchBundle\Search\ValueObject\Document;
 use ATSearchBundle\Enum\FieldType;
+use ATSearchBundle\Search\ValueObject\Document;
+use Doctrine\Common\Collections\ReadableCollection;
 use Murtukov\PHPCodeGenerator\Modifier;
 use Murtukov\PHPCodeGenerator\PhpFile;
 use ReflectionAttribute;
@@ -44,78 +45,23 @@ class IndexDocumentBuilder
         if (!$hasIndexAttribute) {
             return null;
         }
-
-        $fields = [];
-        $fieldMap = [[]];
-        $hasMultiField = true;
-        $documentClassName = $className . 'IndexDocument';
-
-        $tenantIdFunc = Document::DEFAULT_TENANT_ID;
-        $idFunc = null;
-        $properties = $reflectionClass->getProperties();
-        foreach ($properties as $property) {
-            $attributes = $property->getAttributes();
-            foreach ($attributes as $attribute) {
-                $resolvedTenantIdFunc = $this->getTenantIdFunc($attribute, $property);
-                if ($resolvedTenantIdFunc) {
-                    $tenantIdFunc = $resolvedTenantIdFunc;
-                }
-                $resolvedIdFunc = $this->getEntityIdFunc($attribute, $property);
-                if ($resolvedIdFunc) {
-                    $idFunc = $resolvedIdFunc;
-                }
-                $fieldMetadata = $this->getFieldMetadata($attribute, $property);
-                if (!$fieldMetadata) {
-                    continue;
-                }
-                $field = $fieldMetadata->getFieldNameWithResolver();
-                if ($field) {
-                    $fields[] = $field;
-                }
-                $fieldMap[] = $fieldMetadata->getFieldNamesForMap();
-                $hasMultiField = $hasMultiField || $fieldMetadata->isMulti();
-            }
-        }
-
-        $methods = $reflectionClass->getMethods();
-        foreach ($methods as $method) {
-            $attributes = $method->getAttributes();
-            foreach ($attributes as $attribute) {
-                $resolvedTenantIdFunc = $this->getTenantIdFunc($attribute, $method);
-                if ($resolvedTenantIdFunc) {
-                    $tenantIdFunc = $resolvedTenantIdFunc;
-                }
-                $resolvedIdFunc = $this->getEntityIdFunc($attribute, $method);
-                if ($resolvedIdFunc) {
-                    $idFunc = $resolvedIdFunc;
-                }
-                $fieldMetadata = $this->getFieldMetadata($attribute, $method);
-                if (!$fieldMetadata) {
-                    continue;
-                }
-                $field = $fieldMetadata->getFieldNameWithResolver();
-                if ($field) {
-                    $fields[] = $field;
-                }
-                $fieldMap[] = $fieldMetadata->getFieldNamesForMap();
-                $hasMultiField = $hasMultiField || $fieldMetadata->isMulti();
-            }
-        }
+        [$tenantIdFunc, $idFunc, $fields, $fieldMap, $hasMultiField] = $this->getClassDetails($reflectionClass);
 
         if (!$idFunc) {
             throw new \RuntimeException("Entity $className has no id field");
         }
 
+        $documentClassName = $className . 'IndexDocument';
         $fileBuilder = PhpFile::new()->setNamespace('ATSearchBundle\\DocumentMetadata');
         $class = $fileBuilder->createClass($documentClassName)->setFinal()
             ->addImplements(IndexDocumentInterface::class)
             ->addUse($namespace . '\\' . $className);
         if ($hasMultiField) {
-            $class = $class->addUse('Doctrine\Common\Collections\ReadableCollection');
+            $class = $class->addUse(ReadableCollection::class);
         }
         $class = $class
             ->setDocBlock(static::DOCBLOCK_TEXT)
-            ->addProperty('fieldsMap', Modifier::PRIVATE, 'array', array_merge(...$fieldMap));
+            ->addProperty('fieldsMap', Modifier::PRIVATE, 'array', $fieldMap);
 
         $class->createMethod('getEntityClassName')
             ->setReturnType('string')
@@ -268,5 +214,42 @@ class IndexDocumentBuilder
         }
 
         return $getter;
+    }
+
+    private function getClassDetails(ReflectionClass $reflectionClass): array
+    {
+        $tenantIdFunc = Document::DEFAULT_TENANT_ID;
+        $idFunc = null;
+        $fields = [];
+        $fieldMap = [[]];
+        $hasMultiField = false;
+
+        foreach ([$reflectionClass->getProperties(), $reflectionClass->getMethods()] as $properties) {
+            foreach ($properties as $property) {
+                $attributes = $property->getAttributes();
+                foreach ($attributes as $attribute) {
+                    $resolvedTenantIdFunc = $this->getTenantIdFunc($attribute, $property);
+                    if ($resolvedTenantIdFunc) {
+                        $tenantIdFunc = $resolvedTenantIdFunc;
+                    }
+                    $resolvedIdFunc = $this->getEntityIdFunc($attribute, $property);
+                    if ($resolvedIdFunc) {
+                        $idFunc = $resolvedIdFunc;
+                    }
+                    $fieldMetadata = $this->getFieldMetadata($attribute, $property);
+                    if (!$fieldMetadata) {
+                        continue;
+                    }
+                    $field = $fieldMetadata->getFieldNameWithResolver();
+                    if ($field) {
+                        $fields[] = $field;
+                    }
+                    $fieldMap[] = $fieldMetadata->getFieldNamesForMap();
+                    $hasMultiField = $hasMultiField || $fieldMetadata->isMulti();
+                }
+            }
+        }
+
+        return [$tenantIdFunc, $idFunc, $fields, array_merge(...$fieldMap), $hasMultiField];
     }
 }
